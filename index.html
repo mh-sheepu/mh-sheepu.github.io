@@ -3,10 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Under Development</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(130deg, #5e17eb, #0dcaf0);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            animation: fadeIn 3s infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            animation: fadeIn 4.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 100%; /* UNLIKE doing fake opacity-setting !*/}}
+        </style>
 </head>
 <body>
-    <h1>Welcome to My Website</h1>
-    <p>This is the home page!</p>
+    <div class="container">
+        <h1>We are coming soon!</h1>
+        <p>Stay tuned. The site is under development.</p>
+    </div>
 </body>
 </html>
