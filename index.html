@@ -3,128 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quran Online</title>
+<title>Mobile Wallet – Demo</title>
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Segoe UI", sans-serif;
-  background: #f4f6f8;
 }
 
-header {
-  background: #0b5d3b;
+body {
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  width: 360px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.header {
+  background: #e2136e;
   color: #fff;
   padding: 20px;
   text-align: center;
 }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
+.header h1 {
+  font-size: 1.6rem;
 }
 
-.surah-list, .quran {
-  background: #fff;
-  border-radius: 8px;
+.balance {
+  background: #fbe1ee;
   padding: 15px;
-  overflow-y: auto;
-  max-height: 75vh;
+  text-align: center;
 }
 
-.surah {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+.balance h2 {
+  color: #e2136e;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+}
+
+.menu-item {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-.surah:hover {
-  background: #e6f2ec;
+.menu-item:hover {
+  background: #f0f0f0;
 }
 
-.ayah {
-  margin-bottom: 20px;
+.menu-item span {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.85rem;
 }
 
-.arabic {
-  font-size: 1.7rem;
-  direction: rtl;
-  text-align: right;
-  line-height: 2.6rem;
-}
-
-.english {
-  color: #555;
-  font-size: 0.95rem;
-  margin-top: 5px;
+.footer {
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 10px;
+  color: #777;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>📖 Al-Qur’an Online</h1>
-  <p>Arabic with English Translation</p>
-</header>
+<div class="app">
+  <div class="header">
+    <h1>Mobile Wallet</h1>
+    <p>Demo UI Only</p>
+  </div>
 
-<div class="container">
-  <div class="surah-list" id="surahList">Loading Surahs...</div>
-  <div class="quran" id="quranText">Select a Surah</div>
+  <div class="balance">
+    <p>Available Balance</p>
+    <h2>৳ 12,450.00</h2>
+  </div>
+
+  <div class="menu">
+    <div class="menu-item">📤<span>Send Money</span></div>
+    <div class="menu-item">📥<span>Cash In</span></div>
+    <div class="menu-item">💳<span>Payment</span></div>
+    <div class="menu-item">📱<span>Mobile Recharge</span></div>
+    <div class="menu-item">🧾<span>Bill Pay</span></div>
+    <div class="menu-item">🏦<span>Cash Out</span></div>
+  </div>
+
+  <div class="footer">
+    UI Practice Project · Not a real wallet
+  </div>
 </div>
-
-<script>
-const surahList = document.getElementById("surahList");
-const quranText = document.getElementById("quranText");
-
-/* LOAD SURAH LIST */
-fetch("https://api.alquran.cloud/v1/surah")
-  .then(res => res.json())
-  .then(data => {
-    surahList.innerHTML = "";
-    data.data.forEach(surah => {
-      const div = document.createElement("div");
-      div.className = "surah";
-      div.innerText = surah.number + ". " + surah.englishName;
-      div.onclick = () => loadSurah(surah.number);
-      surahList.appendChild(div);
-    });
-  })
-  .catch(() => {
-    surahList.innerHTML = "Failed to load Surahs";
-  });
-
-/* LOAD SURAH CONTENT */
-function loadSurah(num) {
-  quranText.innerHTML = "Loading...";
-
-  Promise.all([
-    fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`),
-    fetch(`https://api.alquran.cloud/v1/surah/${num}/en.asad`)
-  ])
-  .then(responses => Promise.all(responses.map(r => r.json())))
-  .then(([arabic, english]) => {
-    quranText.innerHTML = "";
-
-    arabic.data.ayahs.forEach((ayah, i) => {
-      const div = document.createElement("div");
-      div.className = "ayah";
-      div.innerHTML = `
-        <div class="arabic">${ayah.text}</div>
-        <div class="english">${english.data.ayahs[i].text}</div>
-      `;
-      quranText.appendChild(div);
-    });
-  })
-  .catch(() => {
-    quranText.innerHTML = "Failed to load Surah";
-  });
-}
-</script>
 
 </body>
 </html>
