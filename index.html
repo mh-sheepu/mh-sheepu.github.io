@@ -10,7 +10,6 @@ body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
   background: #f4f6f8;
-  color: #222;
 }
 
 header {
@@ -20,13 +19,8 @@ header {
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   padding: 20px;
   display: grid;
@@ -34,15 +28,16 @@ header h1 {
   gap: 20px;
 }
 
-.surah-list {
+.surah-list, .quran {
   background: #fff;
   border-radius: 8px;
+  padding: 15px;
   overflow-y: auto;
   max-height: 75vh;
 }
 
 .surah {
-  padding: 12px 15px;
+  padding: 10px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
 }
@@ -51,37 +46,21 @@ header h1 {
   background: #e6f2ec;
 }
 
-.quran {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  max-height: 75vh;
-  overflow-y: auto;
-}
-
 .ayah {
   margin-bottom: 20px;
 }
 
 .arabic {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   direction: rtl;
   text-align: right;
-  line-height: 2.5rem;
+  line-height: 2.6rem;
 }
 
 .english {
-  font-size: 0.95rem;
   color: #555;
+  font-size: 0.95rem;
   margin-top: 5px;
-}
-
-footer {
-  text-align: center;
-  padding: 15px;
-  background: #0b5d3b;
-  color: #fff;
-  font-size: 0.85rem;
 }
 </style>
 </head>
@@ -90,64 +69,59 @@ footer {
 
 <header>
   <h1>📖 Al-Qur’an Online</h1>
-  <p>Read the Quran with English translation</p>
+  <p>Arabic with English Translation</p>
 </header>
 
 <div class="container">
-  <div class="surah-list" id="surahList">
-    Loading Surahs...
-  </div>
-
-  <div class="quran" id="quranText">
-    Select a Surah to read
-  </div>
+  <div class="surah-list" id="surahList">Loading Surahs...</div>
+  <div class="quran" id="quranText">Select a Surah</div>
 </div>
 
-<footer>
-  © Quran Online · Arabic & English Translation
-</footer>
-
 <script>
-// Load Surah list
+const surahList = document.getElementById("surahList");
+const quranText = document.getElementById("quranText");
+
+/* LOAD SURAH LIST */
 fetch("https://api.alquran.cloud/v1/surah")
   .then(res => res.json())
   .then(data => {
-    const list = document.getElementById("surahList");
-    list.innerHTML = "";
-
+    surahList.innerHTML = "";
     data.data.forEach(surah => {
       const div = document.createElement("div");
       div.className = "surah";
-      div.innerHTML = `${surah.number}. ${surah.englishName}`;
+      div.innerText = surah.number + ". " + surah.englishName;
       div.onclick = () => loadSurah(surah.number);
-      list.appendChild(div);
+      surahList.appendChild(div);
     });
+  })
+  .catch(() => {
+    surahList.innerHTML = "Failed to load Surahs";
   });
 
-// Load Surah text
-function loadSurah(number) {
-  const quran = document.getElementById("quranText");
-  quran.innerHTML = "Loading...";
+/* LOAD SURAH CONTENT */
+function loadSurah(num) {
+  quranText.innerHTML = "Loading...";
 
   Promise.all([
-    fetch(`https://api.alquran.cloud/v1/surah/${number}`),
-    fetch(`https://api.alquran.cloud/v1/surah/${number}/en.asad`)
+    fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`),
+    fetch(`https://api.alquran.cloud/v1/surah/${num}/en.asad`)
   ])
-  .then(res => Promise.all(res.map(r => r.json())))
+  .then(responses => Promise.all(responses.map(r => r.json())))
   .then(([arabic, english]) => {
-    quran.innerHTML = "";
+    quranText.innerHTML = "";
 
     arabic.data.ayahs.forEach((ayah, i) => {
       const div = document.createElement("div");
       div.className = "ayah";
-
       div.innerHTML = `
         <div class="arabic">${ayah.text}</div>
         <div class="english">${english.data.ayahs[i].text}</div>
       `;
-
-      quran.appendChild(div);
+      quranText.appendChild(div);
     });
+  })
+  .catch(() => {
+    quranText.innerHTML = "Failed to load Surah";
   });
 }
 </script>
