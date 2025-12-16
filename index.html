@@ -3,144 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Weather</title>
+<title>Quran Online</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-}
-
 body {
-  height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+header {
+  background: #0b5d3b;
   color: #fff;
-  overflow: hidden;
-}
-
-.weather-card {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 20px;
-  width: 320px;
-  text-align: center;
-  animation: fadeIn 1.2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.city {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-.temp {
-  font-size: 3.5rem;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.weather {
-  text-transform: capitalize;
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-.icon {
-  width: 100px;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.details {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  font-size: 0.9rem;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-  margin-top: 15px;
+  padding: 20px;
   text-align: center;
 }
 
-button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  background: #00c6ff;
-  color: #000;
-  font-weight: bold;
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+.surah-list {
+  background: #fff;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.surah {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
+}
+
+.surah:hover {
+  background: #e6f2ec;
+}
+
+.quran {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.ayah {
+  margin-bottom: 20px;
+}
+
+.arabic {
+  font-size: 1.6rem;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.5rem;
+}
+
+.english {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  background: #0b5d3b;
+  color: #fff;
+  font-size: 0.85rem;
 }
 </style>
 </head>
 
 <body>
 
-<div class="weather-card">
-  <div class="city" id="city">Dhaka</div>
-  <img class="icon" id="icon" src="">
-  <div class="temp" id="temp">--°C</div>
-  <div class="weather" id="weather">Loading...</div>
+<header>
+  <h1>📖 Al-Qur’an Online</h1>
+  <p>Read the Quran with English translation</p>
+</header>
 
-  <div class="details">
-    <div>💧 <span id="humidity">--%</span></div>
-    <div>🌬️ <span id="wind">-- km/h</span></div>
+<div class="container">
+  <div class="surah-list" id="surahList">
+    Loading Surahs...
   </div>
 
-  <input type="text" id="search" placeholder="Enter city name">
-  <button onclick="getWeather()">Search</button>
+  <div class="quran" id="quranText">
+    Select a Surah to read
+  </div>
 </div>
 
+<footer>
+  © Quran Online · Arabic & English Translation
+</footer>
+
 <script>
-const API_KEY = "YOUR_API_KEY_HERE"; // 🔴 PUT YOUR KEY
+// Load Surah list
+fetch("https://api.alquran.cloud/v1/surah")
+  .then(res => res.json())
+  .then(data => {
+    const list = document.getElementById("surahList");
+    list.innerHTML = "";
 
-async function getWeather(city = "Dhaka") {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
-  const res = await fetch(url);
-  const data = await res.json();
+    data.data.forEach(surah => {
+      const div = document.createElement("div");
+      div.className = "surah";
+      div.innerHTML = `${surah.number}. ${surah.englishName}`;
+      div.onclick = () => loadSurah(surah.number);
+      list.appendChild(div);
+    });
+  });
 
-  if (data.cod !== 200) {
-    alert("City not found");
-    return;
-  }
+// Load Surah text
+function loadSurah(number) {
+  const quran = document.getElementById("quranText");
+  quran.innerHTML = "Loading...";
 
-  document.getElementById("city").innerText = data.name + ", " + data.sys.country;
-  document.getElementById("temp").innerText = Math.round(data.main.temp) + "°C";
-  document.getElementById("weather").innerText = data.weather[0].description;
-  document.getElementById("humidity").innerText = data.main.humidity + "%";
-  document.getElementById("wind").innerText = data.wind.speed + " km/h";
-  document.getElementById("icon").src =
-    `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
+  Promise.all([
+    fetch(`https://api.alquran.cloud/v1/surah/${number}`),
+    fetch(`https://api.alquran.cloud/v1/surah/${number}/en.asad`)
+  ])
+  .then(res => Promise.all(res.map(r => r.json())))
+  .then(([arabic, english]) => {
+    quran.innerHTML = "";
+
+    arabic.data.ayahs.forEach((ayah, i) => {
+      const div = document.createElement("div");
+      div.className = "ayah";
+
+      div.innerHTML = `
+        <div class="arabic">${ayah.text}</div>
+        <div class="english">${english.data.ayahs[i].text}</div>
+      `;
+
+      quran.appendChild(div);
+    });
+  });
 }
-
-document.querySelector("button").addEventListener("click", () => {
-  const city = document.getElementById("search").value;
-  if (city) getWeather(city);
-});
-
-getWeather();
 </script>
 
 </body>
