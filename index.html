@@ -4,41 +4,186 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sheepu Store</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+body{
+  background:#f4f4f4;
+}
+header{
+  background:#111;
+  color:#fff;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header a{
+  color:#fff;
+  margin-left:15px;
+  text-decoration:none;
+  cursor:pointer;
+}
+section{
+  display:none;
+  padding:20px;
+}
+.active{
+  display:block;
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+.product{
+  background:#fff;
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+}
+.product img{
+  width:100%;
+  border-radius:5px;
+}
+button{
+  margin-top:10px;
+  padding:10px;
+  background:#0b5d3b;
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+.cart-item{
+  background:#fff;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:5px;
+}
+.total{
+  font-size:1.2rem;
+  margin-top:15px;
+  font-weight:bold;
+}
+.checkout input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+</style>
 </head>
+
 <body>
 
 <header>
-  <h1>Sheepu Store</h1>
+  <h2>Sheepu Store</h2>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="cart.html">Cart 🛒</a>
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('products')">Products</a>
+    <a onclick="showPage('cart')">Cart 🛒</a>
+    <a onclick="showPage('checkout')">Checkout</a>
   </nav>
 </header>
 
-<section class="products">
-  <div class="product">
-    <img src="https://via.placeholder.com/200">
-    <h3>T-Shirt</h3>
-    <p>৳ 550</p>
-    <button onclick="addToCart('T-Shirt',550)">Add to Cart</button>
-  </div>
+<!-- HOME -->
+<section id="home" class="active">
+  <h1>Welcome 👋</h1>
+  <p>Your modern demo e-commerce site.</p>
+</section>
 
-  <div class="product">
-    <img src="https://via.placeholder.com/200">
-    <h3>Headphone</h3>
-    <p>৳ 2,500</p>
-    <button onclick="addToCart('Headphone',2500)">Add to Cart</button>
-  </div>
+<!-- PRODUCTS -->
+<section id="products">
+  <h1>Products</h1>
+  <div class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/200">
+      <h3>T-Shirt</h3>
+      <p>৳ 550</p>
+      <button onclick="addToCart('T-Shirt',550)">Add to Cart</button>
+    </div>
 
-  <div class="product">
-    <img src="https://via.placeholder.com/200">
-    <h3>Smart Watch</h3>
-    <p>৳ 3,200</p>
-    <button onclick="addToCart('Smart Watch',3200)">Add to Cart</button>
+    <div class="product">
+      <img src="https://via.placeholder.com/200">
+      <h3>Headphone</h3>
+      <p>৳ 2500</p>
+      <button onclick="addToCart('Headphone',2500)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/200">
+      <h3>Smart Watch</h3>
+      <p>৳ 3200</p>
+      <button onclick="addToCart('Smart Watch',3200)">Add to Cart</button>
+    </div>
   </div>
 </section>
 
-<script src="script.js"></script>
+<!-- CART -->
+<section id="cart">
+  <h1>Your Cart</h1>
+  <div id="cartItems"></div>
+  <div class="total" id="total"></div>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout" class="checkout">
+  <h1>Checkout</h1>
+  <input placeholder="Full Name">
+  <input placeholder="Phone Number">
+  <input placeholder="Address">
+  <button onclick="placeOrder()">Place Order</button>
+</section>
+
+<script>
+let cart = [];
+
+function showPage(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(id==="cart") loadCart();
+}
+
+function addToCart(name,price){
+  cart.push({name,price});
+  alert("Added to cart");
+}
+
+function loadCart(){
+  const cartDiv=document.getElementById("cartItems");
+  const totalDiv=document.getElementById("total");
+  cartDiv.innerHTML="";
+  let total=0;
+
+  cart.forEach(item=>{
+    total+=item.price;
+    cartDiv.innerHTML+=`
+      <div class="cart-item">
+        ${item.name} - ৳ ${item.price}
+      </div>
+    `;
+  });
+
+  totalDiv.innerText="Total: ৳ "+total;
+}
+
+function placeOrder(){
+  if(cart.length===0){
+    alert("Cart is empty");
+    return;
+  }
+  alert("Order placed successfully (Demo)");
+  cart=[];
+  showPage("home");
+}
+</script>
+
 </body>
 </html>
