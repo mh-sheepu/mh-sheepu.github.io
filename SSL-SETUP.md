@@ -153,7 +153,7 @@ TTL: Automatic
 
 **Solutions:**
 - Ensure all resources (images, scripts, stylesheets) use HTTPS URLs
-- Update any hardcoded `http://` URLs to `https://` or use protocol-relative URLs (`//`)
+- Update any hardcoded `http://` URLs to `https://`
 - Check browser console for mixed content warnings
 
 ## Maintenance
@@ -187,9 +187,20 @@ Note: GitHub Pages has limited support for custom headers. Some headers can be a
 
 ### Content Security Policy
 
-Add to your HTML `<head>` section:
+For better security, add a Content Security Policy to your HTML `<head>` section. Here's a basic example (adjust based on your needs):
+
 ```html
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self' data:;">
+```
+
+**Note:** The current site uses inline scripts and styles. For a stricter CSP, consider:
+1. Moving inline scripts to external `.js` files
+2. Moving inline styles to external `.css` files
+3. Using nonce-based CSP for any necessary inline scripts/styles
+
+For the current implementation with inline scripts/styles, you may need to be more permissive:
+```html
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-[hash-of-your-script]'; style-src 'self' 'sha256-[hash-of-your-style]'; img-src 'self' data: https:;">
 ```
 
 ## Resources
