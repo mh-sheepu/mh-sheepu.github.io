@@ -201,8 +201,9 @@
             border: 3px solid #00ff41;
             box-shadow: 0 0 20px rgba(0, 255, 65, 0.4), inset 0 0 20px rgba(0, 255, 65, 0.1);
             object-fit: cover;
-            animation: scanGlitch 0.15s infinite;
+            animation: scanGlitch 0.15s infinite, colorShift 0.4s infinite;
             display: block;
+            filter: contrast(1.1) brightness(1.05);
         }
 
         .profile-wrapper::after {
@@ -213,11 +214,16 @@
             right: 0;
             bottom: 0;
             border-radius: 12px;
-            background: linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, 0.05) 25%, rgba(0, 255, 65, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.05) 75%, rgba(0, 255, 65, 0.05) 76%, transparent 77%, transparent);
+            background: linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, 0.2) 25%, rgba(0, 255, 65, 0.2) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.2) 75%, rgba(0, 255, 65, 0.2) 76%, transparent 77%, transparent);
             background-size: 100% 4px;
             animation: scanLines 8s linear infinite;
             pointer-events: none;
             z-index: 2;
+        }
+
+        @keyframes colorShift {
+            0%, 100% { filter: contrast(1.1) brightness(1.05) hue-rotate(0deg); }
+            50% { filter: contrast(1.1) brightness(1.05) hue-rotate(1deg); }
         }
 
         @keyframes scanGlitch {
