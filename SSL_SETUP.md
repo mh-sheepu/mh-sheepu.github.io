@@ -171,7 +171,7 @@ curl -vI https://sheepu.me 2>&1 | grep -A 5 "SSL certificate"
 
 **Solutions:**
 1. Verify CNAME file exists and contains `sheepu.me`
-2. Ensure repository is public (or GitHub Pro for private)
+2. Ensure repository is public or GitHub Pages is enabled for private repositories
 3. Check Pages settings in repository settings
 
 ## Security Best Practices
@@ -214,7 +214,7 @@ GitHub Pages automatically sets HSTS (HTTP Strict Transport Security) headers, f
 - Let's Encrypt certificates are valid for **90 days**
 - GitHub Pages **automatically renews** certificates before expiration
 - No manual intervention required
-- You'll receive email notifications if renewal fails
+- Monitor certificate status in your repository's Pages settings
 
 ## Additional Resources
 
