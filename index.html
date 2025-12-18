@@ -283,7 +283,7 @@
     </div>
 
     <script>
-        // Matrix rain effect
+        // Matrix rain effect - mixing binary and katakana for cyberpunk aesthetic
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
@@ -293,9 +293,18 @@
         const chars = '01アイウエオカキクケコサシスセソタチツテト';
         const fontSize = 14;
         const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        const drops = Array(Math.floor(columns)).fill(1); // Start position for each column
 
-        function drawMatrix() {
+        let lastTime = 0;
+        const frameInterval = 50; // Update every 50ms
+
+        function drawMatrix(currentTime) {
+            if (currentTime - lastTime < frameInterval) {
+                requestAnimationFrame(drawMatrix);
+                return;
+            }
+            lastTime = currentTime;
+
             ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
@@ -307,14 +316,17 @@
                 const x = i * fontSize;
                 ctx.fillText(text, x, y * fontSize);
 
+                // Reset drop to top with 2.5% probability when it reaches bottom
                 if (y * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             });
+
+            requestAnimationFrame(drawMatrix);
         }
 
-        setInterval(drawMatrix, 50);
+        requestAnimationFrame(drawMatrix);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
