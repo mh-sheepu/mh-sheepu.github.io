@@ -287,14 +287,19 @@
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        let fontSize = 14;
+        let columns, drops;
+
+        function initMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(1); // Start position for each column
+        }
+
+        initMatrix();
 
         const chars = '01アイウエオカキクケコサシスセソタチツテト';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1); // Start position for each column
-
         let lastTime = 0;
         const frameInterval = 50; // Update every 50ms
 
@@ -329,8 +334,7 @@
         requestAnimationFrame(drawMatrix);
 
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            initMatrix();
         });
     </script>
 </body>
