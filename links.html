@@ -187,6 +187,47 @@
             opacity: 0.9;
         }
 
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            border: 3px solid #00ff41;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4), inset 0 0 20px rgba(0, 255, 65, 0.1);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: scanGlitch 0.15s infinite;
+            overflow: hidden;
+        }
+
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, 0.05) 25%, rgba(0, 255, 65, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.05) 75%, rgba(0, 255, 65, 0.05) 76%, transparent 77%, transparent);
+            background-size: 100% 4px;
+            animation: scanLines 8s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes scanGlitch {
+            0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            20% { clip-path: polygon(0 0, 100% 0, 100% 98%, 0 100%); }
+            40% { clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 98%); }
+            60% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            80% { clip-path: polygon(0 1%, 100% 0, 100% 99%, 0 100%); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+
+        @keyframes scanLines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
         @media (max-width: 600px) {
             body {
                 align-items: flex-start;
@@ -218,6 +259,11 @@
             .note {
                 font-size: 0.92rem;
             }
+            .profile-image {
+                width: 160px;
+                height: 160px;
+                margin-bottom: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -237,7 +283,7 @@
             <div class="code-line">$ open researchgate<span class="cursor"></span></div>
         </div>
 
-        <div class="icon">🔗</div>
+        <img src="profile.jpg" alt="Mahmudul Hasan Sheepu" class="profile-image">
         <h1>Find Me Online</h1>
         <p class="subtitle">Profiles are live — choose your platform and let's connect.</p>
 
