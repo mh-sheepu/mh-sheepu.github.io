@@ -363,6 +363,70 @@
             background: rgba(100, 255, 218, 0.08);
         }
 
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.6rem;
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .project-link:hover {
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
+        .research-card {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .research-card:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+        .research-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #00ff41;
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+        }
+        .research-meta {
+            font-size: 0.88rem;
+            color: #64ffda;
+            margin-bottom: 0.5rem;
+        }
+        .research-abstract {
+            font-size: 0.92rem;
+            color: #c8e6c9;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+        .research-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 0.88rem;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .research-link:hover {
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
         @keyframes float {
             0%, 100% {
                 transform: translateY(0);
@@ -436,6 +500,7 @@
                 <a href="index.html">Home</a>
                 <a href="links.html">Links</a>
                 <a href="#projects">Projects</a>
+                <a href="#research">Research</a>
                 <a href="#tech">Tech</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -511,7 +576,7 @@
             </a>
         </div>
 
-        <div class="section-title" id="projects">Featured Projects</div>
+        <div class="section-title" id="projects">🚀 Project Showcase</div>
         <div class="project-grid">
             <div class="project-card">
                 <div class="project-title">Realtime Discord Helper</div>
@@ -521,6 +586,7 @@
                     <span class="pill">Discord API</span>
                     <span class="pill">Redis</span>
                 </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/" target="_blank" rel="noopener">View on GitHub →</a>
             </div>
             <div class="project-card">
                 <div class="project-title">Research Paper Radar</div>
@@ -530,6 +596,7 @@
                     <span class="pill">Scraping</span>
                     <span class="pill">Email</span>
                 </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/" target="_blank" rel="noopener">View on GitHub →</a>
             </div>
             <div class="project-card">
                 <div class="project-title">Portfolio Links Hub</div>
@@ -539,6 +606,74 @@
                     <span class="pill">Accessibility</span>
                     <span class="pill">Responsive</span>
                 </div>
+                <a class="project-link" href="https://sheepu.me" target="_blank" rel="noopener">Live Demo →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">ML Image Classifier</div>
+                <div class="project-desc">CNN-based image classifier trained on custom datasets with a Flask REST API for inference.</div>
+                <div class="tag-row">
+                    <span class="pill">Python</span>
+                    <span class="pill">TensorFlow</span>
+                    <span class="pill">Flask</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">E-Commerce Dashboard</div>
+                <div class="project-desc">Full-stack admin panel with inventory management, analytics, and order tracking.</div>
+                <div class="tag-row">
+                    <span class="pill">React</span>
+                    <span class="pill">Node.js</span>
+                    <span class="pill">MongoDB</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">CLI Task Manager</div>
+                <div class="project-desc">Terminal-based task manager with priority queues, deadlines, and JSON persistence.</div>
+                <div class="tag-row">
+                    <span class="pill">Java</span>
+                    <span class="pill">CLI</span>
+                    <span class="pill">JSON</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+        </div>
+
+        <div class="section-title" id="research">📚 Research Showcase</div>
+        <div class="project-grid">
+            <div class="research-card">
+                <div class="research-title">Deep Learning Approaches for Bengali Sentiment Analysis</div>
+                <div class="research-meta">2024 · Journal of NLP Research</div>
+                <div class="research-abstract">Explored transformer-based models for low-resource Bengali language sentiment classification, achieving state-of-the-art accuracy on benchmark datasets.</div>
+                <div class="tag-row">
+                    <span class="pill">NLP</span>
+                    <span class="pill">Deep Learning</span>
+                    <span class="pill">Bengali</span>
+                </div>
+                <a class="research-link" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener">Read on ResearchGate →</a>
+            </div>
+            <div class="research-card">
+                <div class="research-title">Automated Plant Disease Detection Using CNN</div>
+                <div class="research-meta">2023 · IEEE Conference Proceedings</div>
+                <div class="research-abstract">Developed an image-based plant disease detection system using convolutional neural networks with 95%+ accuracy on real-world agricultural data.</div>
+                <div class="tag-row">
+                    <span class="pill">Computer Vision</span>
+                    <span class="pill">CNN</span>
+                    <span class="pill">Agriculture</span>
+                </div>
+                <a class="research-link" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener">Read on ResearchGate →</a>
+            </div>
+            <div class="research-card">
+                <div class="research-title">IoT-Based Smart Home Automation System</div>
+                <div class="research-meta">2023 · International Journal of IoT</div>
+                <div class="research-abstract">Designed and implemented a cost-effective smart home system using ESP32 microcontrollers with mobile app integration.</div>
+                <div class="tag-row">
+                    <span class="pill">IoT</span>
+                    <span class="pill">Embedded Systems</span>
+                    <span class="pill">Mobile App</span>
+                </div>
+                <a class="research-link" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener">Read on ResearchGate →</a>
             </div>
         </div>
 
