@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sheepu - Connect across platforms">
-    <title>Sheepu - Links</title>
+    <title>Sheepu - Home</title>
     <style>
         * {
             margin: 0;
@@ -40,6 +40,72 @@
             max-width: 900px;
             position: relative;
             z-index: 1;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 40, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        .nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+        }
+        .brand {
+            color: #00ff41;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: #c8e6c9;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: #64ffda;
+            border-color: #64ffda;
+        }
+
+        .about, .contact {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .about p, .contact p {
+            font-size: 0.98rem;
+            color: #c8e6c9;
+            line-height: 1.6;
+        }
+        .contact a {
+            color: #64ffda;
+            text-decoration: none;
+        }
+        .contact a:hover { color: #00ff41; }
+
+        .footer {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            color: #64ffda;
+            opacity: 0.85;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
         }
 
         .terminal {
@@ -144,6 +210,14 @@
             margin-top: 2rem;
         }
 
+        .section-title {
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00ff41;
+            text-align: left;
+        }
+
         .link-card {
             display: flex;
             align-items: center;
@@ -166,6 +240,15 @@
 
         .link-emoji {
             font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .link-emoji svg {
+            width: 2rem;
+            height: 2rem;
+            fill: currentColor;
         }
 
         .link-title {
@@ -185,6 +268,108 @@
             color: #64ffda;
             font-size: 0.95rem;
             opacity: 0.9;
+        }
+
+        .tech-stack {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .tech-stack-title {
+            font-size: 1.3rem;
+            color: #00ff41;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .tech-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.2s ease;
+            cursor: default;
+        }
+
+        .tech-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .tech-icon:nth-child(1) { animation-delay: 0s; }
+        .tech-icon:nth-child(2) { animation-delay: 0.3s; }
+        .tech-icon:nth-child(3) { animation-delay: 0.6s; }
+        .tech-icon:nth-child(4) { animation-delay: 0.9s; }
+        .tech-icon:nth-child(5) { animation-delay: 1.2s; }
+        .tech-icon:nth-child(6) { animation-delay: 1.5s; }
+        .tech-icon:nth-child(7) { animation-delay: 1.8s; }
+        .tech-icon:nth-child(8) { animation-delay: 2.1s; }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .project-card {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00ff41;
+            margin-bottom: 0.35rem;
+        }
+
+        .project-desc {
+            font-size: 0.96rem;
+            color: #c8e6c9;
+            opacity: 0.9;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            background: rgba(100, 255, 218, 0.08);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         /* removed profile image styles */
@@ -209,10 +394,11 @@
                 padding: 1rem 0.5rem;
             }
             .container {
-                padding: 1.5rem 1rem;
+                padding: 3.5rem 1rem 1.5rem;
                 width: 100%;
                 max-width: 560px;
             }
+            .nav-inner { padding: 0.6rem 0.75rem; }
             h1 {
                 font-size: 1.9rem;
             }
@@ -243,9 +429,27 @@
     </style>
 </head>
 <body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="brand">Sheepu</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="links.html">Links</a>
+                <a href="#projects">Projects</a>
+                <a href="#tech">Tech</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
     <canvas class="matrix-bg" id="matrix"></canvas>
 
     <div class="container">
+        <div class="about" id="about">
+            <div class="section-title">About</div>
+            <p>
+                Welcome! This is a compact hub for quick connection and a snapshot of highlighted work. The design embraces a terminal aesthetic with readable, responsive cards.
+            </p>
+        </div>
         <div class="terminal">
             <div class="terminal-header">
                 <div class="terminal-btn btn-red"></div>
@@ -291,9 +495,75 @@
                     <div class="link-desc">Publications, citations, and research collaborations.</div>
                 </div>
             </a>
+            <a class="link-card" href="mailto:sheepu6005@gmail.com" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">✉️</div>
+                <div>
+                    <div class="link-title">Email</div>
+                    <div class="link-desc">Say hi or start a collab: sheepu6005@gmail.com</div>
+                </div>
+            </a>
+            <a class="link-card" href="resume.pdf" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">📄</div>
+                <div>
+                    <div class="link-title">Résumé (PDF)</div>
+                    <div class="link-desc">One-page snapshot. Replace link with your latest PDF.</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title" id="projects">Featured Projects</div>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-title">Realtime Discord Helper</div>
+                <div class="project-desc">Bot that auto-moderates, posts release updates, and answers FAQs for the community.</div>
+                <div class="tag-row">
+                    <span class="pill">Node.js</span>
+                    <span class="pill">Discord API</span>
+                    <span class="pill">Redis</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Research Paper Radar</div>
+                <div class="project-desc">Lightweight tracker that flags new papers by keyword and emails a weekly digest.</div>
+                <div class="tag-row">
+                    <span class="pill">Python</span>
+                    <span class="pill">Scraping</span>
+                    <span class="pill">Email</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Portfolio Links Hub</div>
+                <div class="project-desc">Single-screen hub with Matrix rain, responsive cards, and quick actions for recruiters.</div>
+                <div class="tag-row">
+                    <span class="pill">HTML/CSS</span>
+                    <span class="pill">Accessibility</span>
+                    <span class="pill">Responsive</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-stack" id="tech">
+            <div class="tech-stack-title">Tech Stack</div>
+            <div class="tech-icons">
+                <div class="tech-icon" title="Java">☕</div>
+                <div class="tech-icon" title="PHP">🐘</div>
+                <div class="tech-icon" title="Python">🐍</div>
+                <div class="tech-icon" title="JavaScript">⚡</div>
+                <div class="tech-icon" title="React">⚛️</div>
+                <div class="tech-icon" title="Node.js">🟢</div>
+                <div class="tech-icon" title="Database">🗄️</div>
+                <div class="tech-icon" title="Git">🔀</div>
+            </div>
+        </div>
+
+        <div class="contact" id="contact">
+            <div class="section-title">Contact</div>
+            <p>Email: <a href="mailto:sheepu6005@gmail.com">sheepu6005@gmail.com</a> · Discord: sheepo6005</p>
         </div>
 
         <div class="note">All links are live. See you online.</div>
+
+        <div class="footer">© 2025 Sheepu · Built with pure HTML/CSS/JS</div>
     </div>
 
     <script>
