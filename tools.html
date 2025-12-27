@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sheepu - Tools">
+    <title>Sheepu - Tools</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #0a0e27;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 40, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        .nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+        }
+        .brand {
+            color: #00ff41;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: #c8e6c9;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: #64ffda;
+            border-color: #64ffda;
+        }
+        .container {
+            margin-top: 5rem;
+            text-align: center;
+        }
+        h1 {
+            color: #00ff41;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .note {
+            color: #64ffda;
+            margin-top: 2rem;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="brand">Mahmdul Hasan Sheepu</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#" style="color:#64ffda;">Tools</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Tools Page</h1>
+        <a href="https://cv-generator-six-snowy.vercel.app/" target="_blank" rel="noopener" style="display:inline-block;margin:2rem auto 0 0;padding:1rem 2rem;background:#1a233a;border:2px solid #00ff41;border-radius:8px;color:#00ff41;font-size:1.2rem;text-decoration:none;transition:background 0.2s;">CV Generator</a>
+        <a href="https://project-tracker-beta-five.vercel.app/" target="_blank" rel="noopener" style="display:inline-block;margin:2rem 0 0 2rem;padding:1rem 2rem;background:#1a233a;border:2px solid #00ff41;border-radius:8px;color:#00ff41;font-size:1.2rem;text-decoration:none;transition:background 0.2s;">Project Tracker</a>
+    </div>
+   
+</html>
