@@ -6,6 +6,40 @@
     <meta name="description" content="Sheepu - Tools">
     <title>Sheepu - Tools</title>
     <style>
+                .tools-btn-group {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 2rem;
+                    margin-top: 2.5rem;
+                }
+                .tool-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 260px;
+                    height: 70px;
+                    background: #1a233a;
+                    border: 2px solid #00ff41;
+                    border-radius: 8px;
+                    color: #00ff41;
+                    font-size: 1.2rem;
+                    text-decoration: none;
+                    transition: background 0.2s;
+                    text-align: center;
+                    box-sizing: border-box;
+                }
+                .tool-btn:hover {
+                    background: #222b45;
+                }
+                @media (max-width: 500px) {
+                    .tool-btn {
+                        width: 95vw;
+                        min-width: 0;
+                        max-width: 98vw;
+                        font-size: 1.1rem;
+                    }
+                }
         body {
             font-family: 'Courier New', Courier, monospace;
             background: #0a0e27;
@@ -79,8 +113,10 @@
     </nav>
     <div class="container">
         <h1>Tools Page</h1>
-        <a href="https://cv-generator-six-snowy.vercel.app/" target="_blank" rel="noopener" style="display:inline-block;margin:2rem auto 0 0;padding:1rem 2rem;background:#1a233a;border:2px solid #00ff41;border-radius:8px;color:#00ff41;font-size:1.2rem;text-decoration:none;transition:background 0.2s;">CV Generator</a>
-        <a href="https://project-tracker-beta-five.vercel.app/" target="_blank" rel="noopener" style="display:inline-block;margin:2rem 0 0 2rem;padding:1rem 2rem;background:#1a233a;border:2px solid #00ff41;border-radius:8px;color:#00ff41;font-size:1.2rem;text-decoration:none;transition:background 0.2s;">Project Tracker</a>
+        <div class="tools-btn-group">
+            <a href="https://cv-generator-six-snowy.vercel.app/" target="_blank" rel="noopener" class="tool-btn">CV Generator</a>
+            <a href="https://project-tracker-beta-five.vercel.app/" target="_blank" rel="noopener" class="tool-btn">Project Tracker</a>
+        </div>
     </div>
    
 </html>
