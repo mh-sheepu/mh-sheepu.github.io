@@ -6,6 +6,65 @@
     <meta name="description" content="Sheepu - Connect across platforms">
     <title>Sheepu - Home</title>
     <style>
+                /* Hamburger styles */
+                .hamburger {
+                    display: none;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 32px;
+                    height: 32px;
+                    cursor: pointer;
+                    z-index: 1001;
+                }
+                .hamburger span {
+                    height: 4px;
+                    width: 100%;
+                    background: #00ff41;
+                    margin: 4px 0;
+                    border-radius: 2px;
+                    transition: 0.3s;
+                }
+                @media (max-width: 700px) {
+                    .nav-inner {
+                        flex-direction: row;
+                        justify-content: center;
+                    }
+                    .brand {
+                        width: 100%;
+                        text-align: center;
+                    }
+                    .brand p {
+                        text-align: center;
+                    }
+                    .nav-links {
+                        position: fixed;
+                        top: 56px;
+                        left: 0;
+                        background: rgba(10, 20, 40, 0.98);
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 0;
+                        width: 200px;
+                        padding: 1rem 1rem 1rem 1.5rem;
+                        box-shadow: 2px 0 16px rgba(0,0,0,0.2);
+                        transform: translateX(-100%);
+                        transition: transform 0.3s cubic-bezier(.4,2,.6,1);
+                        z-index: 1000;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    .nav-links.open {
+                        transform: translateX(0);
+                    }
+                    .nav-links a {
+                        padding: 0.8rem 0;
+                        width: 100%;
+                        text-align: left;
+                        border-bottom: 1px solid rgba(0,255,65,0.08);
+                    }
+                    .hamburger {
+                        display: flex;
+                    }
+                }
         * {
             margin: 0;
             padding: 0;
@@ -504,6 +563,11 @@
 <body>
     <nav class="nav">
         <div class="nav-inner">
+                        <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
             <div class="brand"> Mahmdul Hasan Sheepu
                 <p style="font-size:1rem; color:#64ffda; margin:0; font-weight:400;">Dev</p>
             </div>
@@ -786,6 +850,23 @@
     </div>
 
     <script>
+                // Hamburger menu toggle
+                const hamburger = document.getElementById('hamburger');
+                const navLinks = document.querySelector('.nav-links');
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('open');
+                });
+                hamburger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        navLinks.classList.toggle('open');
+                    }
+                });
+                // Close menu when clicking a link (mobile)
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('open');
+                    });
+                });
         // Matrix rain effect - mixing binary and katakana for cyberpunk aesthetic
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
