@@ -1,1 +1,487 @@
-Restoring to commit 57a64c0147476cbbc6a50e25816d743467f28b86.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sheepu - Software Developer & Researcher">
+    <title>Sheepu - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #0a0e27;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 40, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        .nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+        }
+        .brand {
+            color: #00ff41;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: #c8e6c9;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: #64ffda;
+            border-color: #64ffda;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            color: #64ffda;
+            opacity: 0.85;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .terminal {
+            background: rgba(10, 20, 40, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            margin: 80px auto 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #00ff41;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+
+        .code-line {
+            text-align: left;
+            font-size: 1rem;
+            color: #00ff41;
+            margin: 0.5rem 0;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .code-line:nth-child(1) { animation-delay: 0.5s; }
+        .code-line:nth-child(2) { animation-delay: 1s; }
+        .code-line:nth-child(3) { animation-delay: 1.5s; }
+        .code-line:nth-child(4) { animation-delay: 2s; }
+        .code-line:nth-child(5) { animation-delay: 2.5s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: #00ff41;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            color: #64ffda;
+        }
+
+        .section-title {
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00ff41;
+            text-align: left;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .tech-item {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+
+        .tech-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-name {
+            font-size: 0.95rem;
+            color: #c8e6c9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1rem 2rem;
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            background: rgba(10, 20, 40, 0.85);
+            color: #00ff41;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 28px rgba(0, 255, 65, 0.3);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .project-card {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00ff41;
+            margin-bottom: 0.35rem;
+        }
+
+        .project-desc {
+            font-size: 0.96rem;
+            color: #c8e6c9;
+            opacity: 0.9;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            background: rgba(100, 255, 218, 0.08);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+                padding: 1rem 0.5rem;
+            }
+            .container {
+                padding: 3.5rem 1rem 1.5rem;
+                width: 100%;
+                max-width: 560px;
+            }
+            .nav-inner { padding: 0.6rem 0.75rem; }
+            h1 {
+                font-size: 1.9rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+            }
+            .cta-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="brand">Sheepu</div>
+            <div class="nav-links">
+                <a href="index.html" style="color:#64ffda;">Home</a>
+                <a href="links.html">Links</a>
+                <a href="tools.html">Tools</a>
+            </div>
+        </div>
+    </nav>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+            </div>
+            <div class="code-line">$ whoami</div>
+            <div class="code-line">> Mahmudul Hasan Sheepu</div>
+            <div class="code-line">$ cat role.txt</div>
+            <div class="code-line">> Software Developer | Researcher | Problem Solver</div>
+            <div class="code-line">$ echo $STATUS<span class="cursor"></span></div>
+        </div>
+
+        <div class="icon">👨‍💻</div>
+        <h1>Welcome to My Digital Space</h1>
+        <p class="subtitle">Building innovative solutions with code and creativity.<br>Passionate about full-stack development, research, and open-source.</p>
+
+        <div class="cta-buttons">
+            <a href="links.html" class="cta-btn">🔗 Connect With Me</a>
+            <a href="tools.html" class="cta-btn">🛠️ Explore Tools</a>
+            <a href="https://github.com/mh-sheepo/" target="_blank" rel="noopener noreferrer" class="cta-btn">💻 View GitHub</a>
+        </div>
+
+        <div class="section-title">Featured Projects</div>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-title">Realtime Discord Helper</div>
+                <div class="project-desc">Bot that auto-moderates, posts release updates, and answers FAQs for the community.</div>
+                <div class="tag-row">
+                    <span class="pill">Node.js</span>
+                    <span class="pill">Discord API</span>
+                    <span class="pill">Redis</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Research Paper Radar</div>
+                <div class="project-desc">Lightweight tracker that flags new papers by keyword and emails a weekly digest.</div>
+                <div class="tag-row">
+                    <span class="pill">Python</span>
+                    <span class="pill">Scraping</span>
+                    <span class="pill">Email</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Portfolio Links Hub</div>
+                <div class="project-desc">Single-screen hub with Matrix rain, responsive cards, and quick actions for recruiters.</div>
+                <div class="tag-row">
+                    <span class="pill">HTML/CSS</span>
+                    <span class="pill">Accessibility</span>
+                    <span class="pill">Responsive</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">Tech Stack</div>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <div class="tech-icon">⚛️</div>
+                <div class="tech-name">React</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon">📦</div>
+                <div class="tech-name">Node.js</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon">🐍</div>
+                <div class="tech-name">Python</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon">🗄️</div>
+                <div class="tech-name">MongoDB</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon">🎨</div>
+                <div class="tech-name">CSS/HTML</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-icon">🔧</div>
+                <div class="tech-name">Git</div>
+            </div>
+        </div>
+
+        <div class="footer">© 2025 Sheepu · Built with pure HTML/CSS/JS</div>
+    </div>
+
+    <script>
+        // Matrix rain effect - mixing binary and katakana for cyberpunk aesthetic
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        let fontSize = 14;
+        let columns, drops;
+
+        function initMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(1); // Start position for each column
+        }
+
+        initMatrix();
+
+        const chars = '01アイウエオカキクケコサシスセソタチツテト';
+        let lastTime = 0;
+        const frameInterval = 50; // Update every 50ms
+
+        function drawMatrix(currentTime) {
+            if (currentTime - lastTime < frameInterval) {
+                requestAnimationFrame(drawMatrix);
+                return;
+            }
+            lastTime = currentTime;
+
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+
+            drops.forEach((y, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            });
+
+            requestAnimationFrame(drawMatrix);
+        }
+
+        requestAnimationFrame(drawMatrix);
+
+        window.addEventListener('resize', () => {
+            initMatrix();
+        });
+    </script>
+</body>
+</html>
