@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sheepu - WhatsApp Chat Hider">
+    <title>Sheepu - WhatsApp Chat Hider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #0a0e27;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 40, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+        }
+
+        .brand {
+            color: #00ff41;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: #c8e6c9;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #64ffda;
+            border-color: #64ffda;
+        }
+
+        .container {
+            margin-top: 5rem;
+            padding: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            color: #00ff41;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .description {
+            color: #64ffda;
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .tool-section {
+            background: #1a233a;
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: #00ff41;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            background: #0a0e27;
+            border: 1px solid #00ff41;
+            border-radius: 4px;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            padding: 1rem;
+            resize: vertical;
+        }
+
+        textarea::placeholder {
+            color: #64ffda;
+            opacity: 0.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: #1a233a;
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            color: #00ff41;
+            font-size: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #222b45;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            background: #1a233a;
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            color: #00ff41;
+            font-size: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+
+        .file-label:hover {
+            background: #222b45;
+        }
+
+        .options {
+            margin-top: 1rem;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        label {
+            color: #c8e6c9;
+            cursor: pointer;
+        }
+
+        .info-box {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #64ffda;
+            font-size: 0.9rem;
+        }
+
+        .info-box ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .tool-section {
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button, .file-label {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="brand">Mahmdul Hasan Sheepu</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tools.html">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>WhatsApp Chat Hider</h1>
+        <p class="description">Hide names and sensitive information from WhatsApp chat exports for privacy</p>
+
+        <div class="tool-section">
+            <div class="section-title">Input Chat</div>
+            <textarea id="inputChat" placeholder="Paste your WhatsApp chat here or upload a file...
+
+Example format:
+1/1/24, 12:00 PM - John Doe: Hello there!
+1/1/24, 12:05 PM - Jane Smith: Hi! How are you?"></textarea>
+            
+            <div class="button-group">
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" accept=".txt">
+                    <label for="fileInput" class="file-label">📁 Upload File</label>
+                </div>
+                <button id="clearBtn">Clear</button>
+            </div>
+
+            <div class="options">
+                <div class="section-title">Options</div>
+                <div class="option-item">
+                    <input type="checkbox" id="hideNames" checked>
+                    <label for="hideNames">Hide contact names</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="hideNumbers" checked>
+                    <label for="hideNumbers">Hide phone numbers</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="hideMedia" checked>
+                    <label for="hideMedia">Hide media attachments</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-section">
+            <div class="section-title">Processed Chat</div>
+            <textarea id="outputChat" placeholder="Processed chat will appear here..." readonly></textarea>
+            
+            <div class="button-group">
+                <button id="processBtn">🔒 Process Chat</button>
+                <button id="copyBtn" disabled>📋 Copy to Clipboard</button>
+                <button id="downloadBtn" disabled>💾 Download</button>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>How to use:</strong>
+            <ul>
+                <li>Export your WhatsApp chat (without media) from WhatsApp</li>
+                <li>Paste the text or upload the exported .txt file</li>
+                <li>Select which information you want to hide</li>
+                <li>Click "Process Chat" to anonymize</li>
+                <li>Copy or download the sanitized chat</li>
+            </ul>
+            <p style="margin-top: 0.5rem;"><strong>Note:</strong> All processing happens locally in your browser. Your chat data is never sent to any server.</p>
+        </div>
+    </div>
+
+    <script>
+        const inputChat = document.getElementById('inputChat');
+        const outputChat = document.getElementById('outputChat');
+        const fileInput = document.getElementById('fileInput');
+        const clearBtn = document.getElementById('clearBtn');
+        const processBtn = document.getElementById('processBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const hideNames = document.getElementById('hideNames');
+        const hideNumbers = document.getElementById('hideNumbers');
+        const hideMedia = document.getElementById('hideMedia');
+
+        // File upload handler
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    inputChat.value = event.target.result;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Clear button
+        clearBtn.addEventListener('click', () => {
+            inputChat.value = '';
+            outputChat.value = '';
+            copyBtn.disabled = true;
+            downloadBtn.disabled = true;
+        });
+
+        // Process button
+        processBtn.addEventListener('click', () => {
+            const chat = inputChat.value;
+            if (!chat.trim()) {
+                alert('Please enter or upload a WhatsApp chat first!');
+                return;
+            }
+
+            const processedChat = processWhatsAppChat(chat);
+            outputChat.value = processedChat;
+            copyBtn.disabled = false;
+            downloadBtn.disabled = false;
+        });
+
+        // Copy button
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(outputChat.value);
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            } catch (err) {
+                // Fallback for older browsers
+                outputChat.select();
+                document.execCommand('copy');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            }
+        });
+
+        // Download button
+        downloadBtn.addEventListener('click', () => {
+            const blob = new Blob([outputChat.value], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'whatsapp-chat-hidden.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Main processing function
+        function processWhatsAppChat(chat) {
+            let processed = chat;
+            const nameMap = new Map();
+            let nameCounter = 1;
+
+            // WhatsApp chat format regex patterns
+            // Pattern 1: DD/MM/YY, HH:MM AM/PM - Name: Message
+            // Pattern 2: [DD/MM/YY, HH:MM:SS AM/PM] Name: Message
+            // Pattern 3: DD/MM/YYYY, HH:MM - Name: Message
+            
+            if (hideNames.checked) {
+                // Match various WhatsApp timestamp formats followed by name
+                const nameRegex = /(\d{1,2}\/\d{1,2}\/\d{2,4},?\s+\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM|am|pm)?\s*[\-\]]\s*)([^:]+):/g;
+                
+                processed = processed.replace(nameRegex, (match, timestamp, name) => {
+                    const cleanName = name.trim();
+                    if (!nameMap.has(cleanName)) {
+                        nameMap.set(cleanName, `User ${nameCounter}`);
+                        nameCounter++;
+                    }
+                    return timestamp + nameMap.get(cleanName) + ':';
+                });
+            }
+
+            if (hideNumbers.checked) {
+                // Hide phone numbers (various formats)
+                processed = processed.replace(/\+?\d{1,3}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g, '[PHONE NUMBER]');
+            }
+
+            if (hideMedia.checked) {
+                // Hide media attachments
+                processed = processed.replace(/<attached: .+?>/gi, '<attached: [MEDIA]>');
+                processed = processed.replace(/\(file attached\)/gi, '(file hidden)');
+                processed = processed.replace(/\[?image omitted\]?/gi, '[image hidden]');
+                processed = processed.replace(/\[?video omitted\]?/gi, '[video hidden]');
+                processed = processed.replace(/\[?audio omitted\]?/gi, '[audio hidden]');
+                processed = processed.replace(/\[?document omitted\]?/gi, '[document hidden]');
+                processed = processed.replace(/\[?sticker omitted\]?/gi, '[sticker hidden]');
+                processed = processed.replace(/\[?GIF omitted\]?/gi, '[GIF hidden]');
+            }
+
+            return processed;
+        }
+    </script>
+</body>
+</html>
