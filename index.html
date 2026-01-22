@@ -1,1 +1,941 @@
-Restoring to commit 57a64c0147476cbbc6a50e25816d743467f28b86.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sheepu - Connect across platforms">
+    <title>Sheepu - Home</title>
+    <style>
+                /* Hamburger styles */
+                .hamburger {
+                    display: none;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 32px;
+                    height: 32px;
+                    cursor: pointer;
+                    z-index: 1001;
+                }
+                .hamburger span {
+                    height: 4px;
+                    width: 100%;
+                    background: #00ff41;
+                    margin: 4px 0;
+                    border-radius: 2px;
+                    transition: 0.3s;
+                }
+                @media (max-width: 700px) {
+                    .nav-inner {
+                        flex-direction: row;
+                        justify-content: center;
+                    }
+                    .brand {
+                        width: 100%;
+                        text-align: center;
+                    }
+                    .brand p {
+                        text-align: center;
+                    }
+                    .nav-links {
+                        position: fixed;
+                        top: 56px;
+                        left: 0;
+                        background: rgba(10, 20, 40, 0.98);
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 0;
+                        width: 200px;
+                        padding: 1rem 1rem 1rem 1.5rem;
+                        box-shadow: 2px 0 16px rgba(0,0,0,0.2);
+                        transform: translateX(-100%);
+                        transition: transform 0.3s cubic-bezier(.4,2,.6,1);
+                        z-index: 1000;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    .nav-links.open {
+                        transform: translateX(0);
+                    }
+                    .nav-links a {
+                        padding: 0.8rem 0;
+                        width: 100%;
+                        text-align: left;
+                        border-bottom: 1px solid rgba(0,255,65,0.08);
+                    }
+                    .hamburger {
+                        display: flex;
+                    }
+                }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #0a0e27;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 4.5rem 2rem 2rem 2rem; /* extra top padding for fixed nav */
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 20, 40, 0.9);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+        .nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+        }
+        .brand {
+            color: #00ff41;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: #c8e6c9;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: #64ffda;
+            border-color: #64ffda;
+        }
+
+        .contact {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .contact p {
+            font-size: 0.98rem;
+            color: #c8e6c9;
+            line-height: 1.6;
+        }
+        .contact a {
+            color: #64ffda;
+            text-decoration: none;
+        }
+        .contact a:hover { color: #00ff41; }
+
+        .footer {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            color: #64ffda;
+            opacity: 0.85;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .terminal {
+            background: rgba(10, 20, 40, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #00ff41;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red { background: #ff5f56; }
+        .btn-yellow { background: #ffbd2e; }
+        .btn-green { background: #27c93f; }
+
+        .code-line {
+            text-align: left;
+            font-size: 1rem;
+            color: #00ff41;
+            margin: 0.5rem 0;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .code-line:nth-child(1) { animation-delay: 0.5s; }
+        .code-line:nth-child(2) { animation-delay: 1s; }
+        .code-line:nth-child(3) { animation-delay: 1.5s; }
+        .code-line:nth-child(4) { animation-delay: 2s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background: #00ff41;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            color: #64ffda;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            margin-top: 3rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00ff41;
+            text-align: left;
+        }
+        .container > .terminal {
+            margin-top: 2rem;
+        }
+        .container > .icon {
+            margin-top: 2rem;
+        }
+        .container > .links-grid {
+            margin-top: 2.5rem;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            background: rgba(10, 20, 40, 0.85);
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+
+        .link-emoji {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .link-emoji svg {
+            width: 2rem;
+            height: 2rem;
+            fill: currentColor;
+        }
+
+        .link-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00ff41;
+        }
+
+        .link-desc {
+            font-size: 0.95rem;
+            color: #c8e6c9;
+            opacity: 0.85;
+        }
+
+        .note {
+            margin-top: 2rem;
+            color: #64ffda;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .tech-stack {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .tech-stack-title {
+            font-size: 1.3rem;
+            color: #00ff41;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .tech-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.2s ease;
+            cursor: default;
+        }
+
+        .tech-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .tech-icon:nth-child(1) { animation-delay: 0s; }
+        .tech-icon:nth-child(2) { animation-delay: 0.3s; }
+        .tech-icon:nth-child(3) { animation-delay: 0.6s; }
+        .tech-icon:nth-child(4) { animation-delay: 0.9s; }
+        .tech-icon:nth-child(5) { animation-delay: 1.2s; }
+        .tech-icon:nth-child(6) { animation-delay: 1.5s; }
+        .tech-icon:nth-child(7) { animation-delay: 1.8s; }
+        .tech-icon:nth-child(8) { animation-delay: 2.1s; }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .project-card {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00ff41;
+            margin-bottom: 0.35rem;
+        }
+
+        .project-desc {
+            font-size: 0.96rem;
+            color: #c8e6c9;
+            opacity: 0.9;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            background: rgba(100, 255, 218, 0.08);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.6rem;
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .project-link:hover {
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
+        .research-card {
+            background: rgba(10, 20, 40, 0.85);
+            border: 2px solid #00ff41;
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .research-card:hover {
+            transform: translateY(-6px);
+            border-color: #64ffda;
+            box-shadow: 0 0 28px rgba(100, 255, 218, 0.25);
+        }
+        .research-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #00ff41;
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+        }
+        .research-meta {
+            font-size: 0.88rem;
+            color: #64ffda;
+            margin-bottom: 0.5rem;
+        }
+        .research-abstract {
+            font-size: 0.92rem;
+            color: #c8e6c9;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+        .research-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: #64ffda;
+            text-decoration: none;
+            font-size: 0.88rem;
+            border-bottom: 1px dashed transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .research-link:hover {
+            color: #00ff41;
+            border-color: #00ff41;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* removed profile image styles */
+
+        @keyframes scanGlitch {
+            0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            20% { clip-path: polygon(0 0, 100% 0, 100% 98%, 0 100%); }
+            40% { clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 98%); }
+            60% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            80% { clip-path: polygon(0 1%, 100% 0, 100% 99%, 0 100%); }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+        }
+
+        @keyframes scanLines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+                padding: 1rem 0.5rem;
+            }
+            .container {
+                padding: 3.5rem 1rem 1.5rem;
+                width: 100%;
+                max-width: 560px;
+            }
+            .nav-inner { padding: 0.6rem 0.75rem; }
+            h1 {
+                font-size: 1.9rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+            }
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            .link-card {
+                padding: 1.1rem;
+            }
+            .link-title {
+                font-size: 1.05rem;
+            }
+            .link-desc {
+                font-size: 0.92rem;
+            }
+            .note {
+                font-size: 0.92rem;
+            }
+            .profile-image {
+                width: 160px;
+                height: 160px;
+                margin-bottom: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+                        <div class="hamburger" id="hamburger" aria-label="Open navigation" tabindex="0">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+            <div class="brand"> Mahmdul Hasan Sheepu
+                <p style="font-size:1rem; color:#64ffda; margin:0; font-weight:400;">Dev</p>
+            </div>
+                <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#projects">Projects</a>
+                <a href="#research">Research</a>
+                <a href="#tech">Tech</a>
+                <a href="#contact">Contact</a>
+                <a href="tools.html">Tools</a>
+            </div>
+        </div>
+    </nav>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+
+        <!-- Mouse Gear Effect -->
+        <div id="mouse-gear" style="position:fixed;left:50vw;top:50vh;z-index:1000;pointer-events:none;transition:transform 0.1s cubic-bezier(.4,2,.6,1);">
+            <svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="gear-shape">
+                    <circle cx="24" cy="24" r="12" stroke="#00ff41" stroke-width="4" fill="#222"/>
+                    <g stroke="#00ff41" stroke-width="3">
+                        <line x1="24" y1="2" x2="24" y2="10"/>
+                        <line x1="24" y1="38" x2="24" y2="46"/>
+                        <line x1="2" y1="24" x2="10" y2="24"/>
+                        <line x1="38" y1="24" x2="46" y2="24"/>
+                        <line x1="8.5" y1="8.5" x2="14.5" y2="14.5"/>
+                        <line x1="33.5" y1="33.5" x2="39.5" y2="39.5"/>
+                        <line x1="8.5" y1="39.5" x2="14.5" y2="33.5"/>
+                        <line x1="33.5" y1="14.5" x2="39.5" y2="8.5"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-btn btn-red"></div>
+                <div class="terminal-btn btn-yellow"></div>
+                <div class="terminal-btn btn-green"></div>
+            </div>
+            <div class="code-line">$ echo "Connect with Sheepu"</div>
+            <div class="code-line">$ open linkedin</div>
+            <div class="code-line">$ open github</div>
+            <div class="code-line">$ open researchgate<span class="cursor"></span></div>
+        </div>
+
+        <div class="icon">🔗</div>
+        <h1>Find Me Online</h1>
+        <p class="subtitle">Profiles are live — choose your platform and let's connect.</p>
+
+        <div class="links-grid">
+            <a class="link-card" href="https://bd.linkedin.com/in/mahmudul-hasan-sheepu-7a81521ab" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">💼</div>
+                <div>
+                    <div class="link-title">LinkedIn</div>
+                    <div class="link-desc">Career highlights, projects, and updates.</div>
+                </div>
+            </a>
+            <a class="link-card" href="https://github.com/mh-sheepo/" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">🧑‍💻</div>
+                <div>
+                    <div class="link-title">GitHub</div>
+                    <div class="link-desc">Code, experiments, and open-source work.</div>
+                </div>
+            </a>
+            <a class="link-card" href="https://discord.com/users/sheepo6005" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">💬</div>
+                <div>
+                    <div class="link-title">Discord</div>
+                    <div class="link-desc">Username: sheepo6005 — ping me anytime.</div>
+                </div>
+            </a>
+            <a class="link-card" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">📚</div>
+                <div>
+                    <div class="link-title">ResearchGate</div>
+                    <div class="link-desc">Publications, citations, and research collaborations.</div>
+                </div>
+            </a>
+            <a class="link-card" href="mailto:sheepu6005@gmail.com" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">✉️</div>
+                <div>
+                    <div class="link-title">Email</div>
+                    <div class="link-desc">Say hi or start a collab: sheepu6005@gmail.com</div>
+                </div>
+            </a>
+            <a class="link-card" href="resume.pdf" target="_blank" rel="noopener noreferrer">
+                <div class="link-emoji">📄</div>
+                <div>
+                    <div class="link-title">Résumé (PDF)</div>
+                    <div class="link-desc">One-page snapshot. Replace link with your latest PDF.</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title" id="projects">🚀 Project Showcase</div>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-title">Color-Based Agro Product Sorting & Disease Detection</div>
+                <div class="project-desc">Computer vision system for automated agricultural product sorting and plant disease detection using color analysis.</div>
+                <div class="tag-row">
+                    <span class="pill">Computer Vision</span>
+                    <span class="pill">ML</span>
+                    <span class="pill">Agriculture</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/Color-Based-Agro-Product-Sorting-and-Disease-Detection" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Faculty Evaluation System</div>
+                <div class="project-desc">Web-based faculty evaluation platform for IRAS with rating system and analytics dashboard.</div>
+                <div class="tag-row">
+                    <span class="pill">JavaScript</span>
+                    <span class="pill">Web App</span>
+                    <span class="pill">Education</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/Faculty_Evaluation" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Simulation Operation of Titas Gas</div>
+                <div class="project-desc">Interactive simulation system modeling gas distribution operations with real-time monitoring.</div>
+                <div class="tag-row">
+                    <span class="pill">JavaScript</span>
+                    <span class="pill">Simulation</span>
+                    <span class="pill">Operations</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/SimulationOperationOfTitasGas" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">IoT-Based Smart Project</div>
+                <div class="project-desc">Internet of Things project with sensor integration and smart device automation capabilities.</div>
+                <div class="tag-row">
+                    <span class="pill">IoT</span>
+                    <span class="pill">Embedded</span>
+                    <span class="pill">Sensors</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/IOT-Based-Project-" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Bangladesh Football Federation</div>
+                <div class="project-desc">Java-based application for managing football federation data, teams, and match schedules.</div>
+                <div class="tag-row">
+                    <span class="pill">Java</span>
+                    <span class="pill">Sports</span>
+                    <span class="pill">Management</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/Bangladesh-Football-Federation" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">DBMS Project</div>
+                <div class="project-desc">Database management system project with PHP backend, featuring CRUD operations and data analytics.</div>
+                <div class="tag-row">
+                    <span class="pill">PHP</span>
+                    <span class="pill">MySQL</span>
+                    <span class="pill">HTML</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/dbms_project_group-19" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Marriage Registry Office Management</div>
+                <div class="project-desc">Digital system for managing marriage registrations, certificates, and official documentation.</div>
+                <div class="tag-row">
+                    <span class="pill">Management</span>
+                    <span class="pill">Records</span>
+                    <span class="pill">System</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/Marriage-Registry-Office-Management" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Bank Management System</div>
+                <div class="project-desc">Python-based banking application with account management, transactions, and balance tracking.</div>
+                <div class="tag-row">
+                    <span class="pill">Python</span>
+                    <span class="pill">Finance</span>
+                    <span class="pill">CLI</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/Bank-Managment" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">ATM Machine Simulator</div>
+                <div class="project-desc">Python simulation of ATM operations including withdrawals, deposits, and PIN verification.</div>
+                <div class="tag-row">
+                    <span class="pill">Python</span>
+                    <span class="pill">Simulation</span>
+                    <span class="pill">Banking</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/ATM-Machine" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">UML Generator</div>
+                <div class="project-desc">Tool for generating UML diagrams from code or specifications for software documentation.</div>
+                <div class="tag-row">
+                    <span class="pill">UML</span>
+                    <span class="pill">Diagrams</span>
+                    <span class="pill">Tools</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/UML-Generator" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">ThingsToDo</div>
+                <div class="project-desc">Java-based task management app for organizing daily activities with reminders.</div>
+                <div class="tag-row">
+                    <span class="pill">Java</span>
+                    <span class="pill">Productivity</span>
+                    <span class="pill">Mobile</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/ThingsToDo" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+            <div class="project-card">
+                <div class="project-title">MyCalCulator</div>
+                <div class="project-desc">Feature-rich calculator application built with Java, supporting basic and scientific operations.</div>
+                <div class="tag-row">
+                    <span class="pill">Java</span>
+                    <span class="pill">Android</span>
+                    <span class="pill">Utility</span>
+                </div>
+                <a class="project-link" href="https://github.com/mh-sheepo/MyCalCulator" target="_blank" rel="noopener">View on GitHub →</a>
+            </div>
+        </div>
+
+        <div class="section-title" id="research">📚 Research Showcase</div>
+        <div class="project-grid">
+            <div class="research-card">
+                <div class="research-title">Deep Learning Approaches for Bengali Sentiment Analysis</div>
+                <div class="research-meta">2024 · Journal of NLP Research</div>
+                <div class="research-abstract">Explored transformer-based models for low-resource Bengali language sentiment classification, achieving state-of-the-art accuracy on benchmark datasets.</div>
+                <div class="tag-row">
+                    <span class="pill">NLP</span>
+                    <span class="pill">Deep Learning</span>
+                    <span class="pill">Bengali</span>
+                </div>
+                <a class="research-link" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener">Read on ResearchGate →</a>
+            </div>
+            <div class="research-card">
+                <div class="research-title">Automated Plant Disease Detection Using CNN</div>
+                <div class="research-meta">2023 · IEEE Conference Proceedings</div>
+                <div class="research-abstract">Developed an image-based plant disease detection system using convolutional neural networks with 95%+ accuracy on real-world agricultural data.</div>
+                <div class="tag-row">
+                    <span class="pill">Computer Vision</span>
+                    <span class="pill">CNN</span>
+                    <span class="pill">Agriculture</span>
+                </div>
+                <a class="research-link" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener">Read on ResearchGate →</a>
+            </div>
+            <div class="research-card">
+                <div class="research-title">IoT-Based Smart Home Automation System</div>
+                <div class="research-meta">2023 · International Journal of IoT</div>
+                <div class="research-abstract">Designed and implemented a cost-effective smart home system using ESP32 microcontrollers with mobile app integration.</div>
+                <div class="tag-row">
+                    <span class="pill">IoT</span>
+                    <span class="pill">Embedded Systems</span>
+                    <span class="pill">Mobile App</span>
+                </div>
+                <a class="research-link" href="https://www.researchgate.net/profile/Mahmudul-Hasan-Sheepu" target="_blank" rel="noopener">Read on ResearchGate →</a>
+            </div>
+        </div>
+
+        <div class="tech-stack" id="tech">
+            <div class="tech-stack-title">Tech Stack</div>
+            <div class="tech-icons">
+                <div class="tech-icon" title="Java">☕</div>
+                <div class="tech-icon" title="PHP">🐘</div>
+                <div class="tech-icon" title="Python">🐍</div>
+                <div class="tech-icon" title="JavaScript">⚡</div>
+                <div class="tech-icon" title="React">⚛️</div>
+                <div class="tech-icon" title="Node.js">🟢</div>
+                <div class="tech-icon" title="Database">🗄️</div>
+                <div class="tech-icon" title="Git">🔀</div>
+            </div>
+        </div>
+
+        <div class="contact" id="contact">
+            <div class="section-title">Contact</div>
+            <p>Email: <a href="mailto:sheepu6005@gmail.com">sheepu6005@gmail.com</a> · Discord: sheepo6005</p>
+        </div>
+
+        <div class="note">All links are live. See you online.</div>
+
+        <div class="footer">© 2025 Sheepu · Built with pure HTML/CSS/JS</div>
+    </div>
+
+    <script>
+                // Hamburger menu toggle
+                const hamburger = document.getElementById('hamburger');
+                const navLinks = document.querySelector('.nav-links');
+                hamburger.addEventListener('click', () => {
+                    navLinks.classList.toggle('open');
+                });
+                hamburger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        navLinks.classList.toggle('open');
+                    }
+                });
+                // Close menu when clicking a link (mobile)
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('open');
+                    });
+                });
+        // Matrix rain effect - mixing binary and katakana for cyberpunk aesthetic
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        let fontSize = 14;
+        let columns, drops;
+
+        function initMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(1); // Start position for each column
+        }
+
+        initMatrix();
+
+        const chars = '01アイウエオカキクケコサシスセソタチツテト';
+        let lastTime = 0;
+        const frameInterval = 50; // Update every 50ms
+
+        function drawMatrix(currentTime) {
+            if (currentTime - lastTime < frameInterval) {
+                requestAnimationFrame(drawMatrix);
+                return;
+            }
+            lastTime = currentTime;
+
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+
+            drops.forEach((y, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            });
+
+            requestAnimationFrame(drawMatrix);
+        }
+
+        requestAnimationFrame(drawMatrix);
+
+        // Mouse Gear Effect Script
+        (function() {
+            const gear = document.getElementById('mouse-gear');
+            let angle = 0;
+            function spin() {
+                angle = (angle + 4) % 360;
+                gear.style.transform = `rotate(${angle}deg)`;
+                requestAnimationFrame(spin);
+            }
+            spin();
+            document.addEventListener('mousemove', (e) => {
+                const offsetX = 8; // right of cursor, smaller offset for small icon
+                const offsetY = -4; // slightly above
+                gear.style.left = (e.clientX + offsetX) + 'px';
+                gear.style.top = (e.clientY + offsetY) + 'px';
+            });
+        })();
+        window.addEventListener('resize', () => {
+            initMatrix();
+        });
+    </script>
+</body>
+</html>
