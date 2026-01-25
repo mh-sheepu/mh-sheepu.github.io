@@ -2,112 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body { font-family: Arial, sans-serif; }
-        .subject-row { display: flex; align-items: center; margin-bottom: 10px; }
-        .subject-row input, .subject-row select { margin-right: 10px; }
-        .button { margin-left: 10px; }
+        body {
+            background-color: #0d0d0d;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #00ffff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .tool-btn {
+            background-color: #00ff00;
+            border: none;
+            padding: 10px 20px;
+            color: black;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .output-box {
+            border: 2px solid #00ffff;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .form-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 60px;
+        }
+        .form-section {
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
     </style>
 </head>
 <body>
-    <h1>CGPA Calculator</h1>
-    <div id="subjects">
-        <div class="subject-row">
-            <input type="text" placeholder="Subject Name" />
-            <select>
-                <option value="4">A</option>
-                <option value="3.67">A-</option>
-                <option value="3.33">B+</option>
-                <option value="3">B</option>
-                <option value="2.67">B-</option>
-                <option value="2.33">C+</option>
-                <option value="2">C</option>
-                <option value="1.67">C-</option>
-                <option value="1.33">D+</option>
-                <option value="1">D</option>
-                <option value="0">F</option>
-                <option value="0">I</option>
-                <option value="0">W</option>
-                <option value="0">Y</option>
-                <option value="0">O</option>
-                <option value="0">Z</option>
-                <option value="0">P</option>
-                <option value="0">S</option>
-                <option value="0">U</option>
-                <option value="0">T</option>
-                <option value="0">R</option>
-                <option value="0">E</option>
-            </select>
-            <input type="number" placeholder="Credits" />
-            <button class="remove-button" onclick="removeSubject(this)">Remove</button>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="tools.html">Tools</a>
+    </div>
+    <div class="form-layout">
+        <div class="form-section">
+            <h2>CGPA Calculator</h2>
+            <form id="cgpaForm">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+                <label for="grade">Grade:</label>
+                <input type="text" id="grade" name="grade" required>
+                <label for="credits">Credits:</label>
+                <input type="number" id="credits" name="credits" required>
+                <button type="button" class="tool-btn" onclick="addSubject()">Add Subject</button>
+            </form>
+        </div>
+        <div class="output-box">
+            <h3>CGPA Output</h3>
+            <p id="cgpaOutput">Your CGPA will be displayed here.</p>
         </div>
     </div>
-    <button onclick="addSubject()">Add Subject</button>
-    <button onclick="calculateCGPA()">Calculate CGPA</button>
-    <h2 id="cgpaResult"></h2>
-
     <script>
         function addSubject() {
-            const subjectsDiv = document.getElementById('subjects');
-            const newRow = document.createElement('div');
-            newRow.className = 'subject-row';
-            newRow.innerHTML = `
-                <input type="text" placeholder="Subject Name" />
-                <select>
-                    <option value="4">A</option>
-                    <option value="3.67">A-</option>
-                    <option value="3.33">B+</option>
-                    <option value="3">B</option>
-                    <option value="2.67">B-</option>
-                    <option value="2.33">C+</option>
-                    <option value="2">C</option>
-                    <option value="1.67">C-</option>
-                    <option value="1.33">D+</option>
-                    <option value="1">D</option>
-                    <option value="0">F</option>
-                    <option value="0">I</option>
-                    <option value="0">W</option>
-                    <option value="0">Y</option>
-                    <option value="0">O</option>
-                    <option value="0">Z</option>
-                    <option value="0">P</option>
-                    <option value="0">S</option>
-                    <option value="0">U</option>
-                    <option value="0">T</option>
-                    <option value="0">R</option>
-                    <option value="0">E</option>
-                </select>
-                <input type="number" placeholder="Credits" />
-                <button class="remove-button" onclick="removeSubject(this)">Remove</button>
-            `;
-            subjectsDiv.appendChild(newRow);
-        }
-
-        function removeSubject(element) {
-            element.parentElement.remove();
-        }
-
-        function calculateCGPA() {
-            const subjects = document.querySelectorAll('.subject-row');
-            let totalPoints = 0;
-            let totalCredits = 0;
-
-            subjects.forEach((row) => {
-                const gradePoint = parseFloat(row.querySelector('select').value);
-                const credits = parseFloat(row.querySelector('input[type="number"]').value);
-                const subjectName = row.querySelector('input[type="text"]').value;
-
-                if (credits > 0 && !isNaN(gradePoint)) {
-                    totalPoints += gradePoint * credits;
-                    totalCredits += credits;
-                }
-            });
-
-            const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-            document.getElementById('cgpaResult').innerText = "Your CGPA is: " + cgpa;
+            // logic to add a subject and calculate CGPA
         }
     </script>
 </body>
