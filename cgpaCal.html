@@ -1,9 +1,21 @@
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="brand">Mahmdul Hasan Sheepu</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="tools.html" style="color:#64ffda;">Tools</a>
-    </div>
-  </div>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>CGPA Calculator</h1>
+    <form id="cgpaForm">
+        <label for="grades">Enter your grades (comma separated):</label>
+        <input type="text" id="grades" name="grades" required>
+        <button type="submit">Calculate CGPA</button>
+    </form>
+    <div id="result"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
