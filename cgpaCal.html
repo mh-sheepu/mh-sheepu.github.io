@@ -1,57 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .subject-row { display: flex; align-items: center; margin-bottom: 10px; }
+        .subject-row input, .subject-row select { margin-right: 10px; }
+        .button { margin-left: 10px; }
+    </style>
 </head>
 <body>
     <h1>CGPA Calculator</h1>
-    <form id="cgpaForm">
-        <label for="grades">Select your grades:</label>
-        <select id="grades" multiple>
-            <option value="A" data-gpa="4.00">A (90% and above) - Excellent</option>
-            <option value="A-" data-gpa="3.70">A- (85% to less than 90%) - Excellent</option>
-            <option value="B+" data-gpa="3.30">B+ (80% to less than 85%) - Good</option>
-            <option value="B" data-gpa="3.00">B (75% to less than 80%) - Good</option>
-            <option value="B-" data-gpa="2.70">B- (70% to less than 75%) - Good</option>
-            <option value="C+" data-gpa="2.30">C+ (65% to less than 70%) - Passing</option>
-            <option value="C" data-gpa="2.00">C (60% to less than 65%) - Passing</option>
-            <option value="C-" data-gpa="1.70">C- (55% to less than 60%) - Passing</option>
-            <option value="D+" data-gpa="1.30">D+ (50% to less than 55%) - Deficient Passing</option>
-            <option value="D" data-gpa="1.00">D (45% to less than 50%) - Deficient Passing</option>
-            <option value="F" data-gpa="0.00">F (Less than 45%) - Failing</option>
-            <option value="I" data-gpa="0.00">I (Incomplete)</option>
-            <option value="W" data-gpa="0.00">W (Withdrawal)</option>
-            <option value="Y" data-gpa="0.00">Y (Audit)</option>
-            <option value="O" data-gpa="0.00">O (Administrative Withdrawal)</option>
-            <option value="Z" data-gpa="0.00">Z (No Grade Received)</option>
-            <option value="P" data-gpa="0.00">P (Pass)</option>
-            <option value="S" data-gpa="0.00">S (Satisfactory)</option>
-            <option value="U" data-gpa="0.00">U (Unsatisfactory)</option>
-            <option value="T" data-gpa="0.00">T (Repeated - Credit Not Allowed)</option>
-            <option value="R" data-gpa="0.00">R (Repeated - Credit Allowed)</option>
-            <option value="E" data-gpa="0.00">E (Examination)</option>
-        </select>
-        <br><br>
-        <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
-    </form>
-    <h2 id="result"></h2>
+    <div id="subjects">
+        <div class="subject-row">
+            <input type="text" placeholder="Subject Name" />
+            <select>
+                <option value="4">A</option>
+                <option value="3.67">A-</option>
+                <option value="3.33">B+</option>
+                <option value="3">B</option>
+                <option value="2.67">B-</option>
+                <option value="2.33">C+</option>
+                <option value="2">C</option>
+                <option value="1.67">C-</option>
+                <option value="1.33">D+</option>
+                <option value="1">D</option>
+                <option value="0">F</option>
+                <option value="0">I</option>
+                <option value="0">W</option>
+                <option value="0">Y</option>
+                <option value="0">O</option>
+                <option value="0">Z</option>
+                <option value="0">P</option>
+                <option value="0">S</option>
+                <option value="0">U</option>
+                <option value="0">T</option>
+                <option value="0">R</option>
+                <option value="0">E</option>
+            </select>
+            <input type="number" placeholder="Credits" />
+            <button class="remove-button" onclick="removeSubject(this)">Remove</button>
+        </div>
+    </div>
+    <button onclick="addSubject()">Add Subject</button>
+    <button onclick="calculateCGPA()">Calculate CGPA</button>
+    <h2 id="cgpaResult"></h2>
+
     <script>
+        function addSubject() {
+            const subjectsDiv = document.getElementById('subjects');
+            const newRow = document.createElement('div');
+            newRow.className = 'subject-row';
+            newRow.innerHTML = `
+                <input type="text" placeholder="Subject Name" />
+                <select>
+                    <option value="4">A</option>
+                    <option value="3.67">A-</option>
+                    <option value="3.33">B+</option>
+                    <option value="3">B</option>
+                    <option value="2.67">B-</option>
+                    <option value="2.33">C+</option>
+                    <option value="2">C</option>
+                    <option value="1.67">C-</option>
+                    <option value="1.33">D+</option>
+                    <option value="1">D</option>
+                    <option value="0">F</option>
+                    <option value="0">I</option>
+                    <option value="0">W</option>
+                    <option value="0">Y</option>
+                    <option value="0">O</option>
+                    <option value="0">Z</option>
+                    <option value="0">P</option>
+                    <option value="0">S</option>
+                    <option value="0">U</option>
+                    <option value="0">T</option>
+                    <option value="0">R</option>
+                    <option value="0">E</option>
+                </select>
+                <input type="number" placeholder="Credits" />
+                <button class="remove-button" onclick="removeSubject(this)">Remove</button>
+            `;
+            subjectsDiv.appendChild(newRow);
+        }
+
+        function removeSubject(element) {
+            element.parentElement.remove();
+        }
+
         function calculateCGPA() {
-            var totalPoints = 0;
-            var validCount = 0;
-            var selectedGrades = document.getElementById('grades');
-            for (var option of selectedGrades.options) {
-                if (option.selected) {
-                    var gradePoint = parseFloat(option.getAttribute('data-gpa'));
-                    // Only consider grades with non-zero points for CGPA
-                    if (gradePoint > 0) {
-                        totalPoints += gradePoint;
-                        validCount++;
-                    }
+            const subjects = document.querySelectorAll('.subject-row');
+            let totalPoints = 0;
+            let totalCredits = 0;
+
+            subjects.forEach((row) => {
+                const gradePoint = parseFloat(row.querySelector('select').value);
+                const credits = parseFloat(row.querySelector('input[type="number"]').value);
+                const subjectName = row.querySelector('input[type="text"]').value;
+
+                if (credits > 0 && !isNaN(gradePoint)) {
+                    totalPoints += gradePoint * credits;
+                    totalCredits += credits;
                 }
-            }
-            var cgpa = validCount > 0 ? (totalPoints / validCount).toFixed(2) : 0;
-            document.getElementById('result').innerText = 'Your CGPA is: ' + cgpa;
+            });
+
+            const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+            document.getElementById('cgpaResult').innerText = "Your CGPA is: " + cgpa;
         }
     </script>
 </body>
