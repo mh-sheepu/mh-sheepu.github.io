@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - Mahmdul Hasan Sheepu</title>
+<style>
+body { background: #0a0e27; color: #fff; font-family: 'Courier New', monospace; margin: 0; min-height: 100vh; }
+.nav { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10, 20, 40, 0.9); border-bottom: 1px solid rgba(0, 255, 65, 0.3); backdrop-filter: blur(4px); z-index: 2; }
+.nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; }
+.brand { color: #00ff41; font-weight: 700; letter-spacing: 0.5px; }
+.nav-links { display: flex; gap: 1rem; }
+.nav-links a { color: #c8e6c9; text-decoration: none; border-bottom: 1px dashed transparent; transition: color 0.2s, border-color 0.2s;}
+.nav-links a:hover { color: #64ffda; border-color: #64ffda; }
+.container { margin-top: 6rem; text-align: center; padding-bottom: 3rem; }
+.about-section { 
+    max-width: 800px; 
+    margin: 0rem auto 2rem; 
+    padding: 2rem 3rem; 
+    background: rgba(26,35,58,0.9); 
+    border-radius: 8px; 
+    box-shadow: 0 0 20px #00ff41cc; 
+    text-align: left; 
+}
+.about-section h2 {
+    color: #00ff41;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+.about-section h3 {
+    color: #00ff41;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+.about-section p {
+    color: #c8e6c9;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+.profile-card {
+    background: rgba(16, 24, 40, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #00ff41;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00ff41, #64ffda);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 0 auto 1rem;
+    color: #0a0e27;
+}
+.profile-name {
+    color: #00ff41;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.profile-title {
+    color: #64ffda;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+.skill-card {
+    background: rgba(16, 24, 40, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #00ff41;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.skill-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+}
+.skill-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+.skill-name {
+    color: #00ff41;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+.skill-desc {
+    color: #c8e6c9;
+    font-size: 0.9rem;
+}
+.contact-info {
+    background: rgba(16, 24, 40, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #64ffda;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px dashed rgba(100, 255, 218, 0.2);
+}
+.contact-item:last-child {
+    border-bottom: none;
+}
+.contact-icon {
+    font-size: 1.5rem;
+    color: #00ff41;
+}
+.contact-text {
+    color: #c8e6c9;
+}
+.contact-text a {
+    color: #64ffda;
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: border-color 0.2s;
+}
+.contact-text a:hover {
+    border-color: #64ffda;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+.stat-card {
+    background: rgba(16, 24, 40, 0.5);
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+.stat-number {
+    color: #00ff41;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.stat-label {
+    color: #64ffda;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .nav-inner { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 0.8rem 0.5rem; 
+  }
+  .nav-links { 
+    flex-direction: column; 
+    gap: 0.4rem; 
+    width: 100%; 
+  }
+  .container { 
+    margin-top: 10rem; 
+    padding: 0 0.5rem 2rem 0.5rem;
+  }
+  .about-section { 
+    padding: 1.5rem 1rem; 
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto 1.5rem;
+  }
+  .about-section h2 {
+    font-size: 1.4rem;
+  }
+  .about-section h3 {
+    font-size: 1.1rem;
+  }
+  .about-section p {
+    font-size: 0.95rem;
+  }
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 2.5rem;
+  }
+  .profile-name {
+    font-size: 1.3rem;
+  }
+  .profile-title {
+    font-size: 1rem;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .contact-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container { 
+    margin-top: 12rem; 
+    padding: 0 0.3rem 1.5rem 0.3rem;
+  }
+  .about-section { 
+    padding: 1.2rem 0.8rem; 
+  }
+  .about-section h2 {
+    font-size: 1.2rem;
+  }
+  .about-section h3 {
+    font-size: 1rem;
+  }
+  .about-section p {
+    font-size: 0.9rem;
+  }
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+  .stat-number {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .brand { 
+    font-size: 0.85rem; 
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+  .container { 
+    margin-top: 13rem; 
+  }
+  .about-section h2 {
+    font-size: 1.1rem;
+  }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">Mahmdul Hasan Sheepu</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="about.html">About Us</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="about-section">
+    <h2>👨‍💻 About Me</h2>
+    
+    <div class="profile-card">
+      <div class="profile-avatar">🧑‍💻</div>
+      <div class="profile-name">Mahmdul Hasan Sheepu</div>
+      <div class="profile-title">Full Stack Developer | Problem Solver | Tech Enthusiast</div>
+    </div>
+
+    <p>
+      Hello! I'm Mahmdul Hasan Sheepu, a passionate developer dedicated to creating innovative web solutions 
+      that make people's lives easier. I specialize in building intuitive tools and applications that solve 
+      real-world problems.
+    </p>
+
+    <p>
+      My journey in programming started with a curiosity about how things work on the web, and has evolved 
+      into a passion for creating clean, efficient, and user-friendly applications. I believe in the power 
+      of technology to transform ideas into reality.
+    </p>
+
+    <h3>🎯 What I Do</h3>
+    
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Web Development</div>
+        <div class="skill-desc">HTML, CSS, JavaScript</div>
+      </div>
+      
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">Backend</div>
+        <div class="skill-desc">Node.js, APIs, Databases</div>
+      </div>
+      
+      <div class="skill-card">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">UI/UX Design</div>
+        <div class="skill-desc">Responsive, Modern Interfaces</div>
+      </div>
+      
+      <div class="skill-card">
+        <div class="skill-icon">🛠️</div>
+        <div class="skill-name">Tools & Utilities</div>
+        <div class="skill-desc">Calculators, Converters, Games</div>
+      </div>
+    </div>
+
+    <h3>📊 By The Numbers</h3>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Hours Coding</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Tools Built</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Ideas</div>
+      </div>
+    </div>
+
+    <h3>💡 My Mission</h3>
+    
+    <p>
+      To create accessible, efficient, and beautiful web tools that empower users to accomplish their tasks 
+      with ease. Whether it's calculating CGPA, converting land measurements, playing chess, or compressing 
+      images - every tool is crafted with care and attention to detail.
+    </p>
+
+    <h3>📫 Get In Touch</h3>
+    
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-text">
+          Email: <a href="mailto:contact@example.com">contact@example.com</a>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">💼</div>
+        <div class="contact-text">
+          GitHub: <a href="https://github.com/mh-sheepu" target="_blank">github.com/mh-sheepu</a>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-text">
+          Portfolio: <a href="#" target="_blank">mahmdul-portfolio.com</a>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-text">
+          LinkedIn: <a href="#" target="_blank">linkedin.com/in/mh-sheepu</a>
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align: center; color: #64ffda; margin-top: 2rem; font-style: italic;">
+      "Code is poetry written in logic. Let's create something amazing together!"
+    </p>
+  </div>
+</div>
+</body>
+</html>
