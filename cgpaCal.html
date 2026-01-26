@@ -35,8 +35,50 @@ body { background: #0a0e27; color: #fff; font-family: 'Courier New', monospace; 
     border-radius: 8px;
     border-left: 3px solid #00ff41;
 }
-.cgpa-row input, .cgpa-row select { border: 2px solid #00ff41; border-radius: 6px; background: #222b45; padding: 6px 10px; color: #fff; font-size: 1rem; }
-.cgpa-row input[type="number"] { width: 90px; }
+.cgpa-row input, .cgpa-row select { 
+    border: 2px solid #00ff41; 
+    border-radius: 6px; 
+    background: #222b45; 
+    padding: 6px 10px; 
+    color: #fff; 
+    font-size: 1rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.cgpa-row select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300ff41' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 35px;
+    cursor: pointer;
+}
+
+/* Update the select dropdown styles */
+.cgpa-row select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300ff41' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 35px;
+    cursor: pointer;
+}
+
+/* Add this new rule for mobile */
+@media (max-width: 768px) {
+  .cgpa-row select {
+    /* Remove custom arrow on mobile, use native */
+    background-image: none !important;
+    padding-right: 14px !important;
+    /* Enable native mobile picker */
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+  }
+}
+
 .btn-group { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
 .cgpa-btn { background: #1a233a; color: #00ff41; border: 2px solid #00ff41; border-radius: 8px; padding: 9px 18px; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
 .cgpa-btn:hover { background: #222b45; }
@@ -86,10 +128,20 @@ body { background: #0a0e27; color: #fff; font-family: 'Courier New', monospace; 
   }
   .cgpa-row input, 
   .cgpa-row select { 
-    font-size: 1rem; 
-    padding: 12px; 
+    font-size: 1.1rem; 
+    padding: 14px; 
     width: 100%;
     box-sizing: border-box;
+    min-height: 48px;
+  }
+  .cgpa-row select {
+    padding-right: 40px;
+    background-position: right 12px center;
+    background-size: 14px;
+    /* Use native mobile picker */
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    appearance: menulist;
   }
   .cgpa-row input[type="number"] { 
     width: 100%; 
@@ -103,6 +155,7 @@ body { background: #0a0e27; color: #fff; font-family: 'Courier New', monospace; 
     width: 100%; 
     font-size: 1rem; 
     padding: 12px; 
+    min-height: 48px;
   }
   #result { 
     font-size: 1.1rem; 
