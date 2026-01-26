@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Land Utilities - Bangladesh Land Converter</title>
+<style>
+body { background: #0a0e27; color: #fff; font-family: 'Courier New', monospace; margin: 0; min-height: 100vh; }
+.nav { position: fixed; top: 0; left: 0; width: 100%; background: rgba(10, 20, 40, 0.9); border-bottom: 1px solid rgba(0, 255, 65, 0.3); backdrop-filter: blur(4px); z-index: 2; }
+.nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; }
+.brand { color: #00ff41; font-weight: 700; letter-spacing: 0.5px; }
+.nav-links { display: flex; gap: 1rem; }
+.nav-links a { color: #c8e6c9; text-decoration: none; border-bottom: 1px dashed transparent; transition: color 0.2s, border-color 0.2s;}
+.nav-links a:hover { color: #64ffda; border-color: #64ffda; }
+.container { margin-top: 6rem; text-align: center; padding-bottom: 3rem; }
+.land-section { 
+    max-width: 650px; 
+    margin: 0rem auto; 
+    padding: 2rem 3rem; 
+    background: rgba(26,35,58,0.9); 
+    border-radius: 8px; 
+    box-shadow: 0 0 20px #00ff41cc; 
+    text-align: center; 
+}
+.info-box {
+    background: rgba(16, 24, 40, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #00ff41;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+.info-box h3 {
+    color: #00ff41;
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed rgba(100, 255, 218, 0.2);
+}
+.info-item:last-child {
+    border-bottom: none;
+}
+.converter-row { 
+    display: flex; 
+    gap: 1rem; 
+    margin-bottom: 1rem; 
+    align-items: center; 
+    padding: 1rem;
+    background: rgba(16, 24, 40, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid #00ff41;
+}
+.converter-row input, .converter-row select { 
+    border: 2px solid #00ff41; 
+    border-radius: 6px; 
+    background: #222b45; 
+    padding: 10px 12px; 
+    color: #fff; 
+    font-size: 1rem;
+    flex: 1;
+}
+.converter-row select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300ff41' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 35px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.land-btn { 
+    background: #1a233a; 
+    color: #00ff41; 
+    border: 2px solid #00ff41; 
+    border-radius: 8px; 
+    padding: 12px 24px; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    transition: background 0.2s;
+    width: 100%;
+    margin-top: 1rem;
+}
+.land-btn:hover { background: #222b45; }
+#result { 
+    color: #64ffda; 
+    margin-top: 2rem; 
+    font-size: 1.3rem; 
+    letter-spacing: 0.5px;
+    background: rgba(16, 24, 40, 0.5);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 3px solid #64ffda;
+    display: none;
+}
+#result.show { display: block; }
+
+/* --- Start MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+  .nav-inner { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 1rem; 
+  }
+  .nav-links { 
+    flex-direction: column; 
+    gap: 0.6rem; 
+    width: 100%; 
+  }
+  .container { 
+    margin-top: 10rem; 
+    padding: 0 1rem 3rem 1rem;
+  }
+  .land-section { 
+    padding: 2rem 1.5rem; 
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .info-box {
+    padding: 1rem;
+  }
+  .info-item {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .converter-row { 
+    flex-direction: column; 
+    gap: 0.8rem;
+    padding: 1.2rem;
+  }
+  .converter-row input, 
+  .converter-row select { 
+    font-size: 1.1rem; 
+    padding: 14px; 
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 48px;
+  }
+  .converter-row select {
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+    background-image: none !important;
+    padding-right: 14px !important;
+  }
+  .land-btn { 
+    font-size: 1rem; 
+    padding: 14px; 
+    min-height: 48px;
+  }
+  #result { 
+    font-size: 1.1rem;
+    word-wrap: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  .container { 
+    margin-top: 12rem; 
+    padding: 0 0.5rem 3rem 0.5rem;
+  }
+  .land-section { 
+    padding: 1.5rem 1rem; 
+  }
+  h2 {
+    font-size: 1.3rem !important;
+  }
+  .info-box h3 {
+    font-size: 1.1rem;
+  }
+  .converter-row input, 
+  .converter-row select { 
+    font-size: 0.95rem; 
+    padding: 12px; 
+  }
+  .land-btn { 
+    font-size: 0.95rem; 
+    padding: 12px; 
+  }
+  #result { 
+    font-size: 1rem; 
+  }
+}
+
+@media (max-width: 370px) {
+  .brand { 
+    font-size: 0.9rem; 
+  }
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+  .container { 
+    margin-top: 13rem; 
+  }
+  h2 {
+    font-size: 1.2rem !important;
+  }
+}
+/* --- End MOBILE OPTIMIZATION --- */
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">Mahmdul Hasan Sheepu</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="tools.html">Tools</a>
+      <a href="text.html">CGPA Calculator</a>
+      <a href="land-utilities.html">Land Utilities</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="land-section">
+    <h2 style="color:#00ff41;">🇧🇩 Land Utilities - Bangladesh</h2>
+    
+    <div class="info-box">
+      <h3>প্রচলিত জমির মাপ</h3>
+      <div class="info-item">
+        <span>১ শতাংশ (Shotok)</span>
+        <span>৪৩৫.৬ বর্গফুট</span>
+      </div>
+      <div class="info-item">
+        <span>১ কাঠা</span>
+        <span>১.৬৫ শতাংশ</span>
+      </div>
+      <div class="info-item">
+        <span>১ বিঘা</span>
+        <span>৩৩ শতাংশ</span>
+      </div>
+      <div class="info-item">
+        <span>১ একর</span>
+        <span>১০০ শতাংশ</span>
+      </div>
+      <div class="info-item">
+        <span>১ একর</span>
+        <span>৬০.৫ কাঠা</span>
+      </div>
+      <div class="info-item">
+        <span>১ একর</span>
+        <span>৩ বিঘা ৭ কাঠা ১০ শতাংশ</span>
+      </div>
+    </div>
+
+    <h3 style="color:#00ff41; margin-bottom: 1.5rem;">জমি রূপান্তরকারী</h3>
+    
+    <div class="converter-row">
+      <input type="number" id="inputValue" placeholder="পরিমাণ লিখুন" step="0.01" min="0" />
+      <select id="fromUnit">
+        <option value="shotok">শতাংশ (Shotok)</option>
+        <option value="katha">কাঠা</option>
+        <option value="bigha">বিঘা</option>
+        <option value="acre">একর</option>
+        <option value="sqft">বর্গফুট</option>
+      </select>
+    </div>
+
+    <div style="text-align: center; color: #00ff41; font-size: 1.5rem; margin: 1rem 0;">↓</div>
+
+    <div class="converter-row">
+      <select id="toUnit">
+        <option value="shotok">শতাংশ (Shotok)</option>
+        <option value="katha">কাঠা</option>
+        <option value="bigha">বিঘা</option>
+        <option value="acre">একর</option>
+        <option value="sqft">বর্গফুট</option>
+      </select>
+    </div>
+
+    <button class="land-btn" onclick="convertLand()">রূপান্তর করুন</button>
+
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+const conversionRates = {
+  shotok: 1,
+  katha: 1.65,
+  bigha: 33,
+  acre: 100,
+  sqft: 435.6
+};
+
+function convertLand() {
+  const inputValue = parseFloat(document.getElementById('inputValue').value);
+  const fromUnit = document.getElementById('fromUnit').value;
+  const toUnit = document.getElementById('toUnit').value;
+  const resultDiv = document.getElementById('result');
+
+  if (isNaN(inputValue) || inputValue < 0) {
+    resultDiv.innerHTML = '❌ সঠিক সংখ্যা লিখুন';
+    resultDiv.className = 'show';
+    return;
+  }
+
+  // Convert to shotok first
+  let valueInShotok;
+  if (fromUnit === 'sqft') {
+    valueInShotok = inputValue / conversionRates.sqft;
+  } else {
+    valueInShotok = inputValue * conversionRates[fromUnit];
+  }
+
+  // Convert from shotok to target unit
+  let result;
+  if (toUnit === 'sqft') {
+    result = valueInShotok * conversionRates.sqft;
+  } else {
+    result = valueInShotok / conversionRates[toUnit];
+  }
+
+  const unitNames = {
+    shotok: 'শতাংশ',
+    katha: 'কাঠা',
+    bigha: 'বিঘা',
+    acre: 'একর',
+    sqft: 'বর্গফুট'
+  };
+
+  resultDiv.innerHTML = `
+    <strong>${inputValue} ${unitNames[fromUnit]}</strong> = 
+    <strong style="color: #00ff41;">${result.toFixed(4)} ${unitNames[toUnit]}</strong>
+  `;
+  resultDiv.className = 'show';
+}
+
+// Allow Enter key to convert
+document.getElementById('inputValue').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    convertLand();
+  }
+});
+</script>
+</body>
+</html>
