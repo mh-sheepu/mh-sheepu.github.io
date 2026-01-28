@@ -1103,7 +1103,7 @@
             <div class="chatbot-title">💬 Terminal Chat</div>
             <button id="chatbot-close" class="chatbot-close" aria-label="Close chat">×</button>
         </div>
-        <div id="chatbot-messages" class="chatbot-messages"></div>
+        <div id="chatbot-messages" class="chatbot-messages" role="log" aria-label="Chat messages"></div>
         <div class="chatbot-input-area">
             <input 
                 type="text" 
@@ -1111,8 +1111,9 @@
                 class="chatbot-input" 
                 placeholder="Type your message..."
                 autocomplete="off"
+                aria-label="Type your message"
             />
-            <button id="chatbot-send" class="chatbot-send">Send</button>
+            <button id="chatbot-send" class="chatbot-send" aria-label="Send message">Send</button>
         </div>
     </div>
 
@@ -1224,6 +1225,13 @@
             chatbotContainer.classList.remove('open');
         });
 
+        // Close chatbot with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && chatbotContainer.classList.contains('open')) {
+                chatbotContainer.classList.remove('open');
+            }
+        });
+
         // Predefined responses
         const responses = {
             greetings: [
@@ -1251,13 +1259,18 @@
         function addMessage(text, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
-            messageDiv.textContent = text;
+            // Replace newlines with <br> tags for proper display
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
             chatbotMessages.appendChild(messageDiv);
             chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
         }
 
         // Show typing indicator
         function showTyping() {
+            // Prevent duplicate typing indicators
+            if (document.getElementById('typing-indicator')) {
+                return;
+            }
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot typing-indicator';
             typingDiv.id = 'typing-indicator';
@@ -1294,7 +1307,11 @@
         // Send message
         function sendMessage() {
             const message = chatbotInput.value.trim();
-            if (message === '') return;
+            if (message === '' || chatbotInput.disabled) return;
+
+            // Disable input while processing
+            chatbotInput.disabled = true;
+            chatbotSend.disabled = true;
 
             // Add user message
             addMessage(message, true);
@@ -1308,6 +1325,11 @@
                 hideTyping();
                 const botResponse = getBotResponse(message);
                 addMessage(botResponse, false);
+                
+                // Re-enable input after response
+                chatbotInput.disabled = false;
+                chatbotSend.disabled = false;
+                chatbotInput.focus();
             }, 500 + Math.random() * 1000);
         }
 
@@ -1330,6 +1352,8 @@
                     setTimeout(() => {
                         addMessage("👋 Hello! I'm Sheepu's virtual assistant. Ask me about projects, skills, or how to get in touch!", false);
                     }, 300);
+                    // Disconnect observer after initial greeting to prevent memory leak
+                    observer.disconnect();
                 }
             });
         });
